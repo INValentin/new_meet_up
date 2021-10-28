@@ -1,7 +1,7 @@
 <?php
 
-require '../classes/init.php';
-require './Story.php';
+require __DIR__ . '/../classes/init.php';
+require __DIR__ . '/./Story.php';
 
 $main_story = null;
 
@@ -19,9 +19,10 @@ $next_story = null;
 $prev_story = null;
 
 // get current story and get prev and next user story if available
-if (isset($_GET['story'])) {
-    Story::viewStory($me->username, (int)$_GET['story']);
-    $main_story = Story::findOne((int)$_GET['story']);
+if (isset($_GET['story']) && is_numeric($_GET['story'])) {
+    $story_id = intval($_GET['story']);
+    Story::viewStory($me->username, $story_id);
+    $main_story = Story::findOne(intval($_GET['story']));
 
     if (!$main_story) {
         $url = explode('?', $_SERVER['REQUEST_URI'])[0];
@@ -172,7 +173,7 @@ function fromActiveUser(Story $story)
             <?php if ($main_story) : ?>
                 <?php $user = User::findOne($main_story->username); ?>
                 <div class="storyPreviewContainer">
-
+                    
                     <div data-main-story="<?php echo $main_story_data; ?>" class="storyPreview">
                         <?php if ($main_story->image) : ?>
                             <img src="./story_uploads/<?php echo $main_story->image; ?>" alt="story Image" class="storyPreviewImg">
@@ -188,14 +189,13 @@ function fromActiveUser(Story $story)
                                 <?php foreach ($user_stories as $i => $user_story) : ?>
                                     <?php
                                     $active = $user_story->id === $main_story->id ? "active" : "";
-                                    $viewed = $user_story->viewedBy($me->username) ? "viewed" : "";
+                                    $viewed = $user_story?->viewedBy($me->username) ? "viewed" : "";
                                     $done = $user_story->id < $main_story->id ? "done" : "";
                                     ?>
                                     <!-- <a href="./index.php?story={$user_story->id}"> -->
                                     <a href="./index.php?story=<?php echo $user_story->id; ?>" style="width: <?php echo (100 / count($user_stories)); ?>%" class="<?php echo " $active $done $viewed"; ?> storyPreviewProgressContainer">
                                         <div class="storyPreviewProgress"></div>
                                     </a>
-                                    <!-- </a> -->
                                 <?php endforeach; ?>
                             </div>
 
@@ -212,13 +212,13 @@ function fromActiveUser(Story $story)
                             <?php if ($main_story->has_media) : ?>
                                 <div class="storyPreviewMediaControls">
                                     <span data-play-icon class="storyPreviewMediaControlIcon">
-                                        <img src="../images/play.png" alt="play icon">
+                                        <img src="<?php echo getUrl("/assets/images/play.png") ?>" alt="play icon">
                                     </span>
                                     <span data-pause-icon class="hide storyPreviewMediaControlIcon">
-                                        <img src="../images/pause.png" alt="pause icon">
+                                        <img src="<?php echo getUrl("/assets/images/pause.png") ?>" alt="pause icon">
                                     </span>
                                     <span data-volume-icon class="storyPreviewMediaControlIcon">
-                                        <img src="../images/volume_off.png" alt="volume icon">
+                                        <img src="<?php echo getUrl("/assets/images/volume_off.png") ?>" alt="volume icon">
                                     </span>
                                 </div>
                             <?php endif; ?>
@@ -226,6 +226,8 @@ function fromActiveUser(Story $story)
                     </div>
                     <?php if ($prev_story) : ?>
                         <a href="./index.php?story=<?php echo $prev_story->id; ?>" class="storyPreviewPrevButton btn">Prev</a>
+                    <?php else : ?>
+                            <a href="<?php echo getUrl("/index.php"); ?>" data-redirect-home class="hide btn">Prev</a>
                     <?php endif; ?>
                     <?php if ($next_story) : ?>
                         <a href="./index.php?story=<?php echo $next_story->id; ?>" class="storyPreviewNextButton btn">Next</a>
@@ -247,6 +249,7 @@ function fromActiveUser(Story $story)
             <?php endif; ?>
         </div>
     </div>
+
     <script src="./js/story.js" defer></script>
 </body>
 

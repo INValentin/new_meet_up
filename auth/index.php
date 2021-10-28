@@ -30,7 +30,7 @@ $validator->methodPost(
                     }
 
                     // set cookies
-                    if ($validator->valid_data["remember_me"]) {
+                    if (isset($validator->valid_data["remember_me"])) {
                         Auth::remember($user->username);
                     }
 

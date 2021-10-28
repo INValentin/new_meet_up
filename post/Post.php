@@ -88,28 +88,21 @@ class Post
      */
     public static function getFriendsPosts(string $username):array 
     {
-        $we_are_friends = <<<QE
-        (friend = `posts`.`username` AND partener = :user)
-        OR
-        (partener = `posts`.`username` AND friend = :user)
-        QE;
-
         $query = <<<QUERY
-            SELECT *, COUNT(`posts`.`id`) as post_count
-             FROM `posts` WHERE EXISTS
-             (SELECT * FROM `friends` WHERE ($we_are_friends))
-             OR `posts`.`username` = :me
-             GROUP BY `posts`.`username`
-             ORDER BY `posts`.`date` DESC
+            SELECT `posts`.*, COUNT(`posts`.`id`) as post_count
+            FROM `posts` WHERE EXISTS
+            (
+                SELECT * FROM `friends` 
+                WHERE :user IN (`friends`.`partener`, `friends`.`friend`) 
+                AND `posts`.`username` IN (`friends`.`partener`, `friends`.`friend`)
+            )
+            GROUP BY `posts`.`username`
+            ORDER BY `posts`.`date` DESC
         QUERY;
-
-        $stmt = DB::conn()->prepare("SELECT * FROM `posts` Order By `date` Desc Limit 10");
-
+        $stmt = DB::conn()->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
-        $stmt->execute();
+        $stmt->execute([":user" => $username]);
         $data = $stmt->fetchAll();
-        // var_dump($data[0]->owner());
-
         return $data;
 
     }
@@ -148,8 +141,8 @@ class Post
         $query = "SELECT * FROM `post_likes` WHERE `username` = ? AND `post_id` = ?";
         $stmt = DB::conn()->prepare($query);
         $stmt->execute([$username, $this->id]);
-
-        return $stmt->rowCount() > 0;
+        // var_dump($stmt->rowCount(), $username, $this->id);
+        return $stmt->rowCount() === 1;
     }
     
     /**
@@ -205,6 +198,15 @@ class Post
         $user = $stmt->fetch(PDO::FETCH_OBJ);
         $this->owner = $user;
         return $this->owner;
+    }
+
+    public static function getUserPosts(string $username):array
+    {
+        $query = "SELECT * FROM `posts` WHERE `username` = ? ORDER BY `date` DESC";
+        $stmt = DB::conn()->prepare($query);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+        $stmt->execute([$username]);
+        return $stmt->fetchAll();
     }
     
 }

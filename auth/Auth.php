@@ -202,8 +202,8 @@ class Auth
      */
     public static function authenticate(User $user): bool
     {
-
         $_SESSION['auth_user'] = $user->username;
+        $user->setProperty("status", "online");
         return true;
     }
 
@@ -234,12 +234,14 @@ class Auth
      */
     public static function logout(): void
     {
+        Auth::currentUser()->setProperty("status", "offline");
         // destroy current user session
         session_unset();
         session_destroy();
         if (isset($_COOKIE['auth_user'])) {
             Auth::remember($_COOKIE['auth_user'], reset:true);
         }
+
         header("Location: {$GLOBALS['ROOT_URL']}/index.php");
     }
 }

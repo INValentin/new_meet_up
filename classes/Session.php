@@ -8,7 +8,7 @@ class Session
     /**
      * Initialize session
      *
-     * @return Session
+     * @return void
      */
     public static function init()
     {
@@ -20,16 +20,15 @@ class Session
      *
      * @param string $key key 
      * 
-     * @return Session
+     * @return void
      */
-    public static function setAsSeen(string $key):Session
+    public static function setAsSeen(string $key):void
     {
         if (!Session::has(Session::$seen_key)) {
             Session::se();
         }
 
         array_push($_SESSION[Session::$seen_key], [$key]);
-        return Session;
     }
 
     public static function clearSeen()
@@ -38,7 +37,7 @@ class Session
             Session::init();
         }
 
-        $seen = Session::get(Session::$seen_key);
+        $seen = Session::get(Session::$seen_key, []);
 
         foreach ($seen as $value) {
             if (Session::has($value)) {
@@ -67,7 +66,7 @@ class Session
      * 
      * @return mixed
      */
-    public static function see(string $key, ?mixed $default):mixed
+    public static function see(string $key, mixed $default = null):mixed
     {
         Session::setAsSeen($key);
         return Session::get($key, $default);
@@ -81,7 +80,7 @@ class Session
      * 
      * @return mixed
      */
-    public static function get(string $key, ?mixed $default):mixed
+    public static function get(string $key, mixed $default=null):mixed
     {
         return Session::has($key) ? $_SESSION[$key] : $default;
     }
@@ -92,12 +91,11 @@ class Session
      * @param string $key  session key
      * @param mixed $value session value
      * 
-     * @return Session
+     * @return void
      */
-    public static function set(string $key, mixed $value):Session
+    public static function set(string $key, mixed $value):void
     {
-        $_SESSION[$key] === $value;
-        return Session;
+        $_SESSION[$key] = $value;
     }
 
     /**
@@ -105,12 +103,16 @@ class Session
      *
      * @param string $key key
      * 
-     * @return Session
+     * @return void
      */
-    public static function remove(string $key):Session
+    public static function remove(string $key):void
     {
         unset($_SESSION[$key]);
-        return Session;
     }
 
+    public static function clear():void
+    {
+        session_unset();
+        session_destroy();
+    }
 }

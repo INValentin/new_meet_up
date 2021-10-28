@@ -3,11 +3,12 @@
 require_once __DIR__ . "/../auth/authenticate.php";
 
 require_once  __DIR__ . "/../config.php";
-require_once 'old_user.php';
-require_once 'DB.php';
-require_once 'message.php';
-require_once 'date.php';
-require_once $ROOT_DIR.  '/./auth/Auth.php';
+require_once __DIR__ . '/./Session.php';
+require_once __DIR__ . '/./old_user.php';
+require_once __DIR__ . '/./DB.php';
+require_once __DIR__ . '/./message.php';
+require_once __DIR__ . '/./date.php';
+require_once __DIR__ . '/../auth/Auth.php';
 
 
 $db_connection  = DB::conn();
@@ -18,3 +19,13 @@ $date_obj       = new Dates();
 $users          = $user_obj->get_all_users(true);
 $users_num      = $user_obj->get_all_users(false);
 $unread         = $msg_obj->get_all_unread();
+
+Session::clearSeen();
+
+if (Session::has("url.current")) {
+    Session::set("url.last", Session::get('url.current'));
+    Session::set("url.last.full", Session::get('url.current.full'));
+} 
+
+Session::set("url.current", current_url());
+Session::set("url.current.full", current_url_full());

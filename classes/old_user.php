@@ -390,7 +390,6 @@ class OldUser
         $row = $stmt->fetch(PDO::FETCH_OBJ);
         $username = $row->username;
         if ($stmt->rowCount() == 1) {
-
             $sql1   = "SELECT * FROM users WHERE username = ?";
             $userse = $_SESSION["a_user"];
             $stmt1 = $this->db->prepare($sql1);
@@ -417,7 +416,6 @@ class OldUser
     }
     function profile1_image($user)
     {
-
         $sql   = "SELECT username FROM posts WHERE id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$user]);

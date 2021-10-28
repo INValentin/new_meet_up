@@ -10,7 +10,7 @@
  * @link     https://meet_up.com
  */
 if (!class_exists('Message')) {
-    include_once "./../classes/message.php";
+    include_once __DIR__ . "/../classes/message.php";
 }
 require_once __DIR__ . "/../classes/DB.php";
 
@@ -89,12 +89,12 @@ class Story
 
         // query to select story
         $new_stmt = $connection->prepare(
-            "SELECT * FROM `stories` WHERE `id` = '$id'
+            "SELECT * FROM `stories` WHERE `id` = ?
             AND DATEDIFF(NOW(), `created_at`) < 1"
         );
 
         $new_stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
-        $new_stmt->execute();
+        $new_stmt->execute([$id]);
 
         return $new_stmt->fetch();
     }
@@ -162,7 +162,7 @@ class Story
      */
     public static function viewStory(string $username, int $story_id)
     {
-        if (Story::findOne($story_id)->viewedBy($username)) {
+        if (Story::findOne($story_id)?->viewedBy($username)) {
             return true;
         }
 
@@ -214,7 +214,7 @@ class Story
             ) as story_count
             FROM `stories`
             WHERE `username`=?
-            AND DATEDIFF(NOW(), `stories`.`created_at`) <= 1
+            AND DATEDIFF(NOW(), `stories`.`created_at`) < 1
             ORDER BY created_at ASC LIMIT 1"
         );
         $stmt->execute([$username, $username]);

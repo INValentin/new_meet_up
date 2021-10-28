@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/auth/authenticate.php";
 
-header("Location: ./friends/profile.php");
+header("Location: ./post/home.php");
 
 ?>
 

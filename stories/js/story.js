@@ -1,10 +1,10 @@
 // make story items clickable
-const storyItems = document.querySelectorAll('.storyItem')
-storyItems.forEach(item => {
-    item.addEventListener('click', e => {
+const storyItems = document.querySelectorAll(".storyItem");
+storyItems.forEach((item) => {
+    item.addEventListener("click", (e) => {
         item.querySelector(".storyLink").click();
-    })
-})
+    });
+});
 
 const storyPreviewContainer = document.querySelector(".storyPreviewContainer");
 const storyPreviewProgressContainer = storyPreviewContainer.querySelector(
@@ -16,6 +16,7 @@ const storyPreviewProgress = storyPreviewProgressContainer.querySelector(
 );
 const nextBtn = storyPreviewContainer.querySelector(".storyPreviewNextButton");
 const prevBtn = storyPreviewContainer.querySelector(".storyPreviewPrevButton");
+const goHomeBtn = document.querySelector("[data-redirect-home]");
 const replyInput = storyPreviewContainer.querySelector(
     "form > input[name='reply']"
 );
@@ -57,7 +58,7 @@ function animateProgessBar() {
         progressPercentage += 0.67;
     } else {
         clearInterval(interval);
-        nextBtn?.click();
+        (goHomeBtn || nextBtn).click();
         // progressPercentage = 0
     }
 }
@@ -77,14 +78,14 @@ function handleVideo() {
     pauseIcon.addEventListener("click", pauseVideo);
     volumeIcon.addEventListener("click", toggleMuteVideo);
 
-    const removeListeners = e => {
-        playIcon.removeEventListener('click', playVideo)
-        pauseIcon.removeEventListener('click', pauseVideo)
+    const removeListeners = (e) => {
+        playIcon.removeEventListener("click", playVideo);
+        pauseIcon.removeEventListener("click", pauseVideo);
         volumeIcon.removeEventListener("click", toggleMuteVideo);
-    }
+    };
 
-    video.addEventListener('error', removeListeners);
-    video.addEventListener('ended', removeListeners);
+    video.addEventListener("error", removeListeners);
+    video.addEventListener("ended", removeListeners);
 
     video.addEventListener("click", (e) => {
         if (video.paused) {
@@ -95,7 +96,7 @@ function handleVideo() {
     });
 
     const handleVolume = () => {
-        video.play()
+        video.play();
         let src = volumeIcon.querySelector("img").src;
         if (video.muted) {
             volumeIcon.querySelector("img").src = src.replace("up", "off");
@@ -103,7 +104,6 @@ function handleVideo() {
             volumeIcon.querySelector("img").src = src.replace("off", "up");
         }
     };
-
 
     handleVolume();
 

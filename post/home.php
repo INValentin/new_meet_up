@@ -55,8 +55,7 @@ $posts = Post::getFriendsPosts($user->username);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
-    <link rel="stylesheet" href="<?php echo getUrl("/post/css/home.css");  ?>">
-    <?php require_once '../theme.php'; ?>
+    <link rel="stylesheet" href="<?php echo getUrl("/css/home.css");  ?>">
     <title>MeetUp MeetUs</title>
 </head>
 
@@ -89,11 +88,14 @@ $posts = Post::getFriendsPosts($user->username);
             <?php foreach ($posts as $post) : ?>
                 <div class="userpost"  id="post<?php echo $post->id; ?>">
                     <div class="postHeader">
-                        <div class="postUser">
+                        <a href="<?php echo getUrl("/friends/profile.php?user={$post->username}") ?>" class="postUser">
                             <div class="userProfile">
                                 <img src="../images/<?php echo $post->owner()->profile_pic; ?>" />
                             </div>
                             <div class="userName"><?php echo $post->username; ?></div>
+                        </a>
+                        <div class="postTime">
+                            <?php echo $date_obj->dateDiffStr($post->date); ?>
                         </div>
                     </div>
                     <div class="postBody">
@@ -103,17 +105,17 @@ $posts = Post::getFriendsPosts($user->username);
                             </div>
                         <?php endif; ?>
                         <?php if ($post->image && !$post->video) : ?>
-                            <img class="postImg" src="./images/<?php echo $post->image; ?>" />
+                            <img class="postImg" src="<?php echo getUrl("/post/images/{$post->image}"); ?>" />
                             <?php endif; ?>
                         <?php if ($post->video) : ?>
-                            <video class="postVideo" src="./videos/<?php echo $post->video; ?>" controls>
+                            <video class="postVideo" src="<?php getUrl("/post/videos/{$post->video}"); ?>" controls>
                             <?php endif; ?>
                     </div>
                     <div class="postFooter">
                         <form action="like_post.php" method="post">
                             <input type="hidden" name="post_id" value="<?php echo $post->id; ?>">
-                            <input type="hidden" name="username" value="<?php echo $post->username; ?>">
-                        <button class="postLike <?php echo $post->likedBy($me->username) ? "liked" : ""; ?> likeBtn">
+                            <input type="hidden" name="username" value="<?php echo $me->username; ?>">
+                        <button class="postLike likeBtn <?php echo boolval($post->likedBy($me->username)) ? "liked" : ""; ?> ">
                         <?php echo $post->likedBy($me->username) ? "UnLike" : "Like"; ?>
                         <span class="likeNum"> <?php echo $post->likes(); ?></span></button>
                     </form>
@@ -136,27 +138,28 @@ $posts = Post::getFriendsPosts($user->username);
                 </div>
             <?php endforeach; ?>
         </div>
+        
+            <!-- USED IN JavaScript NOT SHOWN IN HTML comment template -->
+                <template data-comment-template>
+                    <div class="comment">
+                        <div class="commentUserImg">
+                            <img src="<?php echo getUrl("/images/{$me->profile_pic}");  ?>" alt="comment">
+                        </div>
+                        <div>
+                        <div class="commentContent">
+                            <span class="commentUserName"><?php echo $me->username; ?></span>
+                            <div class="commentBody">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, eius.</div>
+                        </div>
+                        <div class="commentBtns">
+                            <button class="commentBtn likeBtn" data-comment-like>Like 1</button>
+                        </div>
+                        </div>
+                    </div>
+                </template>
+                <!-- comment template -->
     </div>
 
-    <!-- comment template -->
-        <template data-comment-template>
-            <div class="comment">
-                <div class="commentUserImg">
-                    <img src="<?php echo getUrl("/images/{$me->profile_pic}");  ?>" alt="comment">
-                </div>
-                <div class="commentContent">
-                    <span class="commentUserName"><?php echo $me->username; ?></span>
-                    <div class="commentBody">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, eius.</div>
-                    <div class="commentBtns">
-                        <button class="commentBtn likeBtn" data-comment-like>Like 1</button>
-                    </div>
-                </div>
-            </div>
-        </template>
-        <!-- comment template -->
-
-
-    <script src="<?php echo getUrl("/post/js/comments.js");  ?>" defer></script>
+    <script src="<?php echo getUrl("/js/comments.js");  ?>" defer></script>
     <script defer>
         window.addEventListener("DOMContentLoaded", e => {
             const imageInput = document.querySelector("[data-image-input]")

@@ -13,13 +13,33 @@ function getActive($url)
     <link rel="stylesheet" href="<?php echo getUrl("/css/font-awesome-4.5.0/css/font-awesome.min.css") ?>">
     <link rel="stylesheet" href="<?php echo getUrl("/css/main.css") ?>">
     <script src="../js/theme.js" defer></script>
+    <script src="../js/search.js" defer></script>
 </head>
 
 <nav>
     <header>
         <a href="<?php echo $ROOT_URL; ?>" class="navLogo">MU</a>
         <div class="navSearch">
-            <input type="search" placeholder="search" />
+            <input data-nav-search-input type="search" placeholder="search" />
+            <div data-nav-search-result-container class="navSearchResultContainer">
+                <!-- <h3 class="navSearchResultHeader">Results: </h3> -->
+                <div data-nav-search-result-list class="navSearchResultList">
+                    <p>Search results goes here</p>
+                    <!-- SEARCH RESULT TEMPLATE USED IN JAVASCRIPT -->
+                    <template data-nav-search-result-template>
+                        <a href="<?php echo getUrl("/friends/profile.php"); ?>" data-nav-search-result class="navSearchResult">
+                            <div class="navSearchResultUser">
+                                <div class="navSearchResultUserImg">
+                                    <img src="<?php echo getUrl("/images/default.png") ?>" alt="img"/>
+                                </div>
+                                <div data-nav-search-result-username class="navSearchResultUserName">
+                                    Ishimwe Valentin - valentin
+                                </div>
+                            </div>
+                        </a>
+                    </template>
+                </div>
+            </div>
         </div>
         <div class="navUserImage">
             <img src="<?php echo getUrl("/images/{$me->profile_pic}");  ?>" alt="profile" />
@@ -39,11 +59,11 @@ function getActive($url)
         <li title="Messages">
             <a data-tooltip="messages" class="<?php getActive(getUrl("/message")); ?>" href="<?php echo getUrl("/message"); ?>">
                 <i class="fa fa-wechat"></i>
-                <?php echo ($unread > 0) ? '<span class="badge-red">' . $unread . '</span>' : ''; ?>
+                <?php echo ($unread > 0) ? '<span class="badge danger">' . $unread . '</span>' : ''; ?>
             </a>
         </li>
         <li title="Settings">
-            <a href="#"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span></span></a>
+            <a href="#"> <i class="fa fa-cog fa-fw"></i> <span></span></a>
             <ul class="subNav">
                 <li>
                     <a href="<?php echo getUrl("/friends/logout.php"); ?>">Logout</a>
