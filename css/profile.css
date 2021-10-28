@@ -1,0 +1,50 @@
+.profileContainer {
+    padding: 1rem;
+    background-color: var(--secondary-bg);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: .25rem;
+}
+
+.profileBg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem .5rem;
+}
+
+.profileImg {
+    background-color: var(--main-bg);
+    width: 200px;
+    overflow: hidden;
+    padding: .5rem;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: radial-gradient(circle, var(--accent-color), var(--secondary-bg), var(--main-bg));;
+}
+
+.profileImg img {
+    height: 100%;
+    width: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+    /* display: none; */
+}
+
+.profileUserName {
+    font-weight: 700;
+    font-size: x-large;
+    letter-spacing: 2px;
+    line-height: 2;
+}
+
+.profileBtns {
+    display: flex;
+    gap: .75rem;
+}
