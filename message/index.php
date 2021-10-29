@@ -160,8 +160,12 @@ if (isset($_POST['getUserMessages']) && isset($_POST['user'])) {
 			display: none;
 			position: static;
 			bottom: 0;
-			align-items: flex-start;
+            margin: 0;
+            padding: 0;
+			align-items: flex-start!important;
 			justify-content: space-between;
+            /* align-items: ; */
+            gap: .25rem;
 		}
 
 		.message-sender-wrapper textarea {
@@ -174,13 +178,7 @@ if (isset($_POST['getUserMessages']) && isset($_POST['user'])) {
 		}
 
 		.message-sender-wrapper #send_message {
-			height: auto;
-			cursor: pointer;
-			color: dodgerblue !important;
-			padding: 4px 3px;
-			border: 1px solid gray;
-			border-radius: 2px;
-			margin-left: .3px;
+			margin-top: 10px;
 		}
 
 		/* active users wrapper style */
@@ -495,6 +493,8 @@ if (isset($_POST['getUserMessages']) && isset($_POST['user'])) {
 			width: 100%;
 		}
 	</style>
+	<?php require_once __DIR__ . "/../lib/createEmiji.php";
+?>
 </head>
 
 <body class="w3-theme-l2">
@@ -537,13 +537,15 @@ if (isset($_POST['getUserMessages']) && isset($_POST['user'])) {
 		</div>
 
 		<div class="message-sender-wrapper w3-margin-bottom">
-			<form id="m_form">
+			<form id="m_form" style="align-items:center;">
 				<input id="reciever" type="hidden" />
 				<input id="me" type="hidden" value="<?php echo $me->username; ?>">
-				<textarea title="Type message in there.." placeholder="Type msg..." id="message" class="w3-theme-l3" required></textarea>
-				<span id="send_message" title="Send message" class="w3-theme-dark w3-hover-theme">
+                <div class="inputContainer" style="flex: 1;padding:0;">
+                    <textarea style="height:100%;" title="Type message in there.." placeholder="Type msg..." id="message" class="w3-theme-l3" required data-emojiable="true" data-emoji-input="unicode"></textarea>
+                </div>
+				<button id="send_message" title="Send message" class="btn w3-theme-dark w3-hover-theme">
 					<i class="fa fa-send"></i>
-				</span>
+				</button>
 			</form>
 		</div>
 	</div>

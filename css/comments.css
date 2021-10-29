@@ -114,8 +114,16 @@
 .commentForm {
     padding: 0.5rem;
     display: flex;
-    align-items: stretch;
+    align-items: flex-end;
     gap: .25rem;
+    width: 100%;
+}
+
+.commentForm .inputContainer {
+    flex: 1;
+    width: 100%;
+    min-height: 3rem;
+    margin: 0;
 }
 
 .commentContainer > label:only-of-type {
@@ -125,5 +133,7 @@
 
 [data-comment-area]{
     margin: 0;
+    min-height: 6rem;
     /* margin: .25rem; */
 }
+

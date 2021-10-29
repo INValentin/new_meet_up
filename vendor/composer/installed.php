@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => '3c5c196597966f457ff64ef274183ebeb14a4d02',
+        'name' => '__root__',
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => '3c5c196597966f457ff64ef274183ebeb14a4d02',
+            'dev_requirement' => false,
+        ),
+        'mervick/emojionearea' => array(
+            'pretty_version' => 'v3.4.2',
+            'version' => '3.4.2.0',
+            'type' => 'plugin',
+            'install_path' => __DIR__ . '/../mervick/emojionearea',
+            'aliases' => array(),
+            'reference' => '99129f789f2e7619ce553c038783a13f47cbc846',
+            'dev_requirement' => false,
+        ),
+        'onesignal/emoji-picker' => array(
+            'pretty_version' => '1.4',
+            'version' => '1.4.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../onesignal/emoji-picker',
+            'aliases' => array(),
+            'reference' => 'fc5e45bbf9bfeed42ccc5897ec13c677d4785f82',
+            'dev_requirement' => false,
+        ),
+    ),
+);

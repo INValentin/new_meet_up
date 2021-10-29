@@ -1,0 +1,6 @@
+{
+    "require": {
+        "mervick/emojionearea": "^3.4",
+        "onesignal/emoji-picker": "^1.4"
+    }
+}

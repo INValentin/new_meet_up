@@ -173,7 +173,7 @@ function fromActiveUser(Story $story)
             <?php if ($main_story) : ?>
                 <?php $user = User::findOne($main_story->username); ?>
                 <div class="storyPreviewContainer">
-                    
+
                     <div data-main-story="<?php echo $main_story_data; ?>" class="storyPreview">
                         <?php if ($main_story->image) : ?>
                             <img src="./story_uploads/<?php echo $main_story->image; ?>" alt="story Image" class="storyPreviewImg">
@@ -226,11 +226,11 @@ function fromActiveUser(Story $story)
                     </div>
                     <?php if ($prev_story) : ?>
                         <a href="./index.php?story=<?php echo $prev_story->id; ?>" class="storyPreviewPrevButton btn">Prev</a>
-                    <?php else : ?>
-                            <a href="<?php echo getUrl("/index.php"); ?>" data-redirect-home class="hide btn">Prev</a>
                     <?php endif; ?>
                     <?php if ($next_story) : ?>
                         <a href="./index.php?story=<?php echo $next_story->id; ?>" class="storyPreviewNextButton btn">Next</a>
+                    <?php else : ?>
+                        <a href="<?php echo getUrl("/index.php"); ?>" data-redirect-home class="hide btn"></a>
                     <?php endif; ?>
                     <form class="storyPreviewReply" action="./story_reply.php" method="post">
                         <?php if ($main_story?->username !== $me->username) :  ?>

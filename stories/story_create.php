@@ -82,9 +82,13 @@ function uploadFile(
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="./css/stories.css">
     <link rel="stylesheet" href="./css/form.css">
     <title>Create Story</title>
+     <?php require_once __DIR__ . "/../lib/createEmiji.php"; ?>
+     <script src="../js/emoji.js" type="module"></script>
+
 </head>
 
 <body>
@@ -98,7 +102,16 @@ function uploadFile(
                 <p class="formText">Start sharing your moments and memories</p>
                 <form action="story_create.php" method="post" enctype="multipart/form-data">
                     <label for="desc">Write Your story</label>
-                    <textarea class="storyCreateArea" id="desc" name="description" placeholder="Write you story here"></textarea>
+                    <div class="inputContainer">
+                        <textarea
+                        class="storyCreateArea"
+                        id="desc"
+                        name="description"
+                        placeholder="Write you story here"
+                        data-emojiable="true"
+                        data-emoji-input="unicode"
+                        ></textarea>
+                    </div>
                     <label for="img">Image</label>
                     <input accept="image/*" type="file" name="image" id="img" />
                     <label for="video">Video</label>
@@ -110,10 +123,7 @@ function uploadFile(
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
 
-
-<?php

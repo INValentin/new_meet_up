@@ -32,6 +32,7 @@
 .postForm.formContainer textarea {
     height: 8rem;
     resize: none;
+    background-color: white;
 }
 
 .userpost {
@@ -95,6 +96,12 @@
     display: flex;
     justify-content: space-between;
     padding: 0.25rem;
+    align-items: center;
+}
+
+
+.postFooter form {
+    margin: 0;
 }
 
 .postFooter button {
@@ -102,6 +109,8 @@
     padding: .35rem .75rem;
     transform: none!important;
 }
+
+
 .postFooter  button.likeBtn {
     padding: .35rem .15rem .35rem .75rem!important;
 }

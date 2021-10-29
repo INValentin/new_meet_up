@@ -21,12 +21,13 @@ class DB
      *
      * @return void
      */
-    public function __construct(string $server = "localhost", string $user = "root", string $database = "new_project2", string $password = "")
+    public function __construct(string $server = "localhost", string $user = "root", string $database = "new_project2", string $password = "",$charset="utf8mb4")
     {
         $this->server   = $server;
         $this->user     = $user;
         $this->database = $database;
         $this->password = $password;
+        $this->charset=$charset;
     }
 
     /**

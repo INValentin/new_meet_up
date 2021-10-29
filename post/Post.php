@@ -89,16 +89,17 @@ class Post
     public static function getFriendsPosts(string $username):array 
     {
         $query = <<<QUERY
-            SELECT `posts`.*, COUNT(`posts`.`id`) as post_count
-            FROM `posts` WHERE EXISTS
+            SELECT `posts`.*
+            FROM `posts` 
+            WHERE (`posts`.`username` = :user)
+            OR EXISTS
             (
                 SELECT * FROM `friends` 
                 WHERE :user IN (`friends`.`partener`, `friends`.`friend`) 
                 AND `posts`.`username` IN (`friends`.`partener`, `friends`.`friend`)
             )
-            GROUP BY `posts`.`username`
             ORDER BY `posts`.`date` DESC
-        QUERY;
+            QUERY;
         $stmt = DB::conn()->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
         $stmt->execute([":user" => $username]);

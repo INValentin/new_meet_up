@@ -28,9 +28,6 @@ class User
     public string $remember_me;
 
 
-
-
-
     /**
      * Create user
      *
