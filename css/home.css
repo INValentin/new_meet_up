@@ -144,3 +144,38 @@
         justify-content: space-between;
     }
 }
+
+
+.postPagination {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0.6rem;
+    /* background-color: rgba(0,0,0,.3); */
+}
+
+.postPagination .btn {
+    border: 2px solid white;
+}
+
+.commentNavContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.commentNavContainer button.commentNavBtn {
+    border: 1px solid white;
+    padding: .25rem 0.5rem .30rem!important;
+    border-radius: .25rem;
+    margin: .5rem .25rem;
+    background-color: rgba(30, 30, 30, .3);
+}
+
+.commentNavBtn.hide {
+    display: none;
+}
+
+.commentNavBtn.nextBtn {
+    align-self: flex-end;
+}

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once __DIR__ . "/../classes/init.php";
 
@@ -7,20 +7,35 @@ require_once __DIR__ . "/../forms/Validator.php";
 
 $user = isset($_GET['user']) ? User::findOne($_GET['user']) : $me;
 
-if (!$user){
-    header("Location: ". getUrl("/404.php?url=" . current_url()));
+if (!$user) {
+    header("Location: " . getUrl("/404.php?url=" . current_url()));
     exit("Error");
 }
 
 $validator = new Validator();
+list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
+
+$validator->methodPost(function (Validator $validator) {
+    $validator->addRules(['profile_pic' => ["is_file" => toDir("/images")]])->validate();
+    $validator->isValid(function (Validator $validator) {
+        Auth::currentUser()->setProperty("profile_pic", $validator->valid_data['profile_pic']);
+    })->redirect(getUrl("/friends/profile.php"));
+
+    $validator->isInvalid(function (Validator $validator) {
+        exit("Failed");
+    })->redirect(getUrl("/friends/profile.php"));
+});
 
 $posts = Post::getUserPosts($user->username);
+$post_paginator = new Paginator();
+$post_paginator->updateHasMore(count($posts));
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,40 +44,64 @@ $posts = Post::getUserPosts($user->username);
     <link rel="stylesheet" href="<?php echo getUrl("/css/home.css") ?>">
     <script src="<?php echo getUrl("/js/comments.js"); ?>" defer></script>
 </head>
+
 <body>
     <div class="container">
         <?php require_once __DIR__ . "/../menu/menu.php"; ?>
         <div class="profileContainer">
+            <div data-profile-edit-modal class="profileEditModal hide">
+                <form action="" method="POST" class="mainFormContainer" enctype="multipart/form-data">
+
+                    <button type="button" data-pick-photo>
+                        <i class="fa fa-image"></i>
+                        Choose profile photo
+                    </button>
+                    <?php echo $csrf(); ?>
+                    <input accept="image/*" type="file" name="profile_pic" data-edit-file-input>
+                    <div data-photo-placeholder class="profilePhotoPlaceholder">
+                    </div>
+                    <button type="button" data-edit-form-submit class="success">Change</button>
+                </form>
+                <button type="button" data-hide-edit-modal class="danger">Cancel</button>
+            </div>
             <div class="profileBg">
                 <div class="profileImg">
                     <img src="<?php echo getUrl("/images/{$user->profile_pic}"); ?>" alt="">
+                    <div class="profileImgEdit">
+
+                        <button data-profile-edit-icon><i class="fa fa-edit"></i></button>
+                    </div>
                 </div>
                 <div class="profileUserName"><?php echo $user->username; ?></div>
+                <?php echo $errors("profile_pic"); ?>
+                <?php if (!empty($user->about)) : ?>
+                    <p class="profileUserAbout"><?php echo $user->about; ?></p>
+                <?php endif; ?>
             </div>
             <div class="profileBtns">
                 <button class="profileBtn">
-                    <i class="fa fa-send"></i> 
+                    <i class="fa fa-send"></i>
                     Message
                 </button>
                 <?php if ($me->username === $user->username) : ?>
-                <a href="#" class="btn successBtn profileBtn">
-                    <i class="fa fa-edit"></i> 
-                    Edit Profile
-                </a>
+                    <a href="editProfile.php" class="btn successBtn profileBtn">
+                        <i class="fa fa-edit"></i>
+                        Edit Profile
+                    </a>
                 <?php endif; ?>
                 <button class="profileBtn">
-                    <i class="fa fa-group"></i> 
+                    <i class="fa fa-group"></i>
                     Friends
                 </button>
             </div>
-            
+
         </div>
 
         <!-- user posts -->
         <?php require_once __DIR__ . "/../post/print_posts.php"; ?>
         <!-- end user posts -->
-</div>
-<!-- comment template -->
+    </div>
+    <!-- comment template -->
     <template data-comment-template>
         <div class="comment">
             <div class="commentUserImg">
@@ -78,7 +117,7 @@ $posts = Post::getUserPosts($user->username);
         </div>
     </template>
     <!-- comment template -->
-    
-    <!-- <script src="<?php echo getUrl("/js/comments.js"); ?>" defer></script> -->
+    <script src="<?php echo getUrl("/js/profile.js") ?>" defer></script>
 </body>
+
 </html>

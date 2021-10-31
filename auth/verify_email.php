@@ -1,16 +1,26 @@
 <?php
 // user email verify script 
+// require_once __DIR__ . "/../config.php";
 require_once __DIR__ . "/./unauthenticate.php";
 require_once __DIR__ . "/./Auth.php";
 require_once __DIR__ . "/../forms/Validator.php";
+require_once __DIR__ . "/../classes/Session.php";
 
 $validator = new Validator();
 list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
 
+$email = Session::get('verify_email', null);
+
+if ($email == null) {
+    Session::set("message", "Invalid verification email");
+    header("Location: " . getUrl("/auth/index.php"));
+    exit();
+}
+
 // resend email if necessary
 if (isset($_GET['resend']) && intval($_GET['resend']) != intval($_SESSION['resend'])) {
     $_SESSION['resend'] = intval($_GET['resend']);
-    $email = $_SESSION['verify_email'];
+
     Auth::sendVerficationCode(User::findOne(email: $email));
     $validator->setSuccessMsg("Email sent!");
 }
@@ -19,20 +29,23 @@ if (!isset($_GET['resend'])) {
     $_SESSION['resend'] = 0;
 }
 
+$validator->addRules(
+    [
+        "email" => [],
+        "verification_code" => [
+            "not_empty" => true, "is_number" => true
+        ],
+    ]
+);
+
 $validator->methodPost(
     function (Validator $validator) {
-        $validator->addRules(
-            [
-                "email" => [],
-                "verification_code" => ["not_empty" => true, "is_number" => true],
-            ]
-        )->addData($_POST)->validate();
+        $validator->addData($_POST)->validate();
 
         if ($validator->valid) {
             try {
                 if (Auth::verifyEmail(...$validator->valid_data)) {
                     header("Location: ./index.php?msg=Email was successfully verfied (:");
-                    // $validator->setSuccessMsg("");
                     exit;
                 }
             } catch (AuthException $e) {
@@ -41,7 +54,6 @@ $validator->methodPost(
         }
     }
 );
-
 
 ?>
 
@@ -59,7 +71,7 @@ $validator->methodPost(
 <body>
     <div class="mainFormContainer">
 
-        <form action="" method="post" class="mainForm">
+        <form action="<?php echo current_url(); ?>" method="post" class="mainForm">
             <div class="formHeader">
                 <a href="#!" class="formBrand">MeetUp</a>
                 <h2>Verify Email</h2>
@@ -68,7 +80,7 @@ $validator->methodPost(
             <?php echo $mainError(); ?>
             <div class="formBody">
                 <?php echo $csrf(); ?>
-                <input type="hidden" name="email" value="<?php echo isset($_SESSION['verify_email']) ? $_SESSION['verify_email'] : ""; ?>" />
+                <input type="hidden" name="email" value="<?php echo isset($email) ? $email : ""; ?>" />
                 <div class="mainInput <?php echo $errorClass('verification_code'); ?>">
                     <Label for="verification_code">Verification code</Label>
                     <input value="<?php echo $data("verification_code"); ?>" name="verification_code" placeholder="Type verification code.." type="text" id="verification_code" />

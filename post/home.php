@@ -9,13 +9,9 @@ require_once __DIR__ . "/../lib/createEmiji.php";
 $user = $me;
 
 
-// friend posts array
-
 $validator = new Validator();
 list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
 
-$validator = new Validator();
-list($errors, $data, $errorClass, $mainError) = $validator->helpers();
 
 $validator->methodPost(
     function (Validator $validator) {
@@ -46,6 +42,8 @@ $validator->methodPost(
 );
 
 $posts = Post::getFriendsPosts($user->username);
+$post_paginator = new Paginator();
+$post_paginator->updateHasMore(count($posts));
 
 ?>
 <!DOCTYPE html>

@@ -25,7 +25,7 @@ body.light {
     --main-bg: #f5f7fb;
     --secondary-bg: hsl(220, 100%, 74%);
     --main-color: #495057;
-    --white: black;
+    --white: #333;
     --accent-color-opacity: #4169e18a;
 }
 
@@ -308,6 +308,14 @@ button::before {
     z-index: 10;
     box-shadow: 2px 3px 12px rgba(20, 20, 20, 0.6);
     transition: 0.3s ease;
+}
+
+:is(.btn, button).danger {
+    background-color: var(--red);
+}
+
+:is(.btn, button).success {
+    background-color: var(--green);
 }
 
 .navSearchResultList {

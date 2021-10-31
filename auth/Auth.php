@@ -184,8 +184,6 @@ class Auth
         $remember_me_cookie = $_COOKIE['remember_me'];
         $user = User::findOne($user_cookie);
         
-        var_dump($user);
-
         if (!($user && password_verify($remember_me_cookie, $user->remember_me))) {
             return false;
         }

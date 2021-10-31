@@ -1,6 +1,7 @@
 <?php 
 
 require_once __DIR__ . "/../classes/DB.php";
+require_once __DIR__ . "/../paginator/Paginator.php";
 
 class Comment {
     public int $id;
@@ -68,9 +69,11 @@ class Comment {
      * @param integer $post_id
      * @return array
      */
-    public static function findByPost(int $post_id, int $page = 0, int $limit = 5):array
+    public static function findByPost(int $post_id):array
     {
-        $page = $page * $limit;
+
+        $limit_string = (new Paginator())->getLimitString();
+
         $query  = "SELECT `comments`.*,  
             (
                 SELECT `users`.`profile_pic` FROM `users` WHERE `users`.`username` = `comments`.`username`
@@ -82,12 +85,12 @@ class Comment {
             FROM `comments` 
             WHERE 
             `post_id` = ? 
-            ORDER BY `created_at` DESC LIMIT $limit OFFSET $page
+            ORDER BY `created_at` DESC
+            $limit_string
         ";
         $stmt = DB::conn()->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
         $stmt->execute([$post_id]);
-
         return $stmt->fetchAll();
     }
 

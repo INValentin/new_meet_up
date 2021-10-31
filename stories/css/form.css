@@ -23,7 +23,7 @@ form {
     margin-bottom: 0.15rem!important;
 }
 
-.formContainer label {
+.formContainer label, .label {
     font-weight: 600;
 }
 

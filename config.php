@@ -18,7 +18,7 @@ $MAIL_SENDER = "ishimwedeveloper@gmail.com";
 
 
 // urls
-$ROOT_URL = "/new_meet_up";
+$ROOT_URL = "/current";
 $LOGIN_URL = $ROOT_URL . "/auth/index.php";
 
 // security
@@ -28,6 +28,10 @@ function getUrl($sub_url = "") {
     $ROOT_URL = $GLOBALS['ROOT_URL'];
     return $ROOT_URL . $sub_url;
 };
+
+function toDir($sub_dir = "") {
+    return $GLOBALS['ROOT_DIR'] . $sub_dir;
+}
 
 function gotoDir($sub_dir = "") {
     $ROOT_DIR = $GLOBALS['ROOT_DIR'];

@@ -12,6 +12,9 @@
 
 // require db connection file
 require_once __DIR__ . "/../classes/DB.php";
+require_once __DIR__ . "/../paginator/Paginator.php";
+
+
 /**
  * Post php class
  *
@@ -42,8 +45,11 @@ class Post
      * 
      * @return Post
      */
-    public static function create(string $post,
-        string $username, string $image = "", string $video= ""
+    public static function create(
+        string $post,
+        string $username,
+        string $image = "",
+        string $video = ""
     ): Post {
         $sql = <<<QR
             INSERT INTO `posts` (`post`, `username`, `image`, `video`) 
@@ -54,7 +60,7 @@ class Post
         $stmt->execute([$post, $username, $image, $video]);
         $post_id = $conn->lastInsertId();
         $post = Post::findOne($post_id);
-        
+
         return $post;
     }
 
@@ -86,8 +92,12 @@ class Post
      *
      * @return array<Story>
      */
-    public static function getFriendsPosts(string $username):array 
+    public static function getFriendsPosts(string $username): array
     {
+
+        
+        $limit_string = (new Paginator())->getLimitString();
+
         $query = <<<QUERY
             SELECT `posts`.*
             FROM `posts` 
@@ -99,13 +109,13 @@ class Post
                 AND `posts`.`username` IN (`friends`.`partener`, `friends`.`friend`)
             )
             ORDER BY `posts`.`date` DESC
+            $limit_string
             QUERY;
         $stmt = DB::conn()->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
         $stmt->execute([":user" => $username]);
         $data = $stmt->fetchAll();
         return $data;
-
     }
 
 
@@ -126,7 +136,7 @@ class Post
         $query = "INSERT INTO `post_likes` (`username`, `post_id`) VALUES (?,?)";
         $stmt = DB::conn()->prepare($query);
         $stmt->execute([$username, $this->id]);
-      
+
         return $stmt->rowCount() > 0;
     }
 
@@ -145,7 +155,7 @@ class Post
         // var_dump($stmt->rowCount(), $username, $this->id);
         return $stmt->rowCount() === 1;
     }
-    
+
     /**
      * Unlike post
      * 
@@ -158,15 +168,15 @@ class Post
         if (!$this->likedBy($username)) {
             return true;
         }
-        
+
         $query = "DELETE FROM `post_likes` WHERE `username` = ? AND `post_id` = ?";
-        
+
         $stmt = DB::conn()->prepare($query);
         $stmt->execute([$username, $this->id]);
-    
+
         return $stmt->rowCount() > 0;
     }
-    
+
     /**
      * Get post likes count
      * 
@@ -179,7 +189,7 @@ class Post
         $stmt = DB::conn()->prepare($query);
         $stmt->execute([$this->id]);
         $likes = $stmt->fetch(PDO::FETCH_OBJ)->likes;
-    
+
         return $likes;
     }
 
@@ -201,13 +211,15 @@ class Post
         return $this->owner;
     }
 
-    public static function getUserPosts(string $username):array
+    public static function getUserPosts(string $username): array
     {
-        $query = "SELECT * FROM `posts` WHERE `username` = ? ORDER BY `date` DESC";
+        $limit_string = (new Paginator())->getLimitString();
+
+        $query = "SELECT * FROM `posts` WHERE `username` = ? ORDER BY `date` DESC $limit_string";
         $stmt = DB::conn()->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
         $stmt->execute([$username]);
-        return $stmt->fetchAll();
+        $data = $stmt->fetchAll();
+        return $data;
     }
-    
 }

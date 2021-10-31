@@ -162,6 +162,50 @@ function shouldMatch(string $field_name, string $match_field_name, array $arr)
     );
 }
 
+function nullable(string $field_name, string $rule_name, array $data) {
+    // 
+}
+
+
+
+function exists(string $field_name, string $query_data, array $data)
+{
+    $table = $query_data[0];
+    $col = isset($query_data[1]) ? $query_data[1] : "";
+    $col_value = isset($query_data[2]) ? $query_data[2] : "";
+
+    $query = "SELECT * FROM `$table` WHERE `$col` = ?";
+    $stmt = DB::conn()->prepare($query);
+    $stmt->execute([$col_value]);
+    $exists = $stmt->rowCount() > 0;
+
+    
+    throwError(!$exists, "$field_name doesn't exist in $table");
+}
+
+
+function unique(string $field_name, array $query_data, array $data)
+{
+    $table = $query_data[0];
+    $col = isset($query_data[1]) ? $query_data[1] : "";
+    $except_col = isset($query_data[2]) ? $query_data[2] : "";
+    $except_value = isset($query_data[3]) ? $query_data[3] : "";
+
+    $query = "SELECT * FROM `$table` WHERE `$col` = ?";
+    $query .= empty($except_col) ? "" : " AND `$except_col` != ?";
+    $stmt = DB::conn()->prepare($query);
+
+    if (!empty($except_col)) {
+        $stmt->execute([$data[$field_name], $except_value]);
+    } else {
+        $stmt->execute([$data[$field_name]]);
+    }
+
+    $exists = $stmt->rowCount() > 0;
+
+    throwError($exists, "$field_name already exist in $table");
+
+}
 
 /**
  * Validate email
@@ -176,7 +220,7 @@ function shouldMatch(string $field_name, string $match_field_name, array $arr)
 function email(string $field_name, string $rule_name, array $data)
 {
     $value = filter_var($data[$field_name], FILTER_VALIDATE_EMAIL);
-    throwError(!$value, "$field_name is not a valid email address");
+    throwError(!$value, "Invalid email address");
 }
 
 /**
@@ -203,12 +247,58 @@ function isFile(string $field_name, string $upload_dir, array &$data)
     }
 }
 
+
+function excludeIf(string $field_name, array $field_data, array &$data)
+{
+    $key = array_key_first($field_data);
+    $matched = isset($data[$key]) && $data[$key] === $field_data[$key];
+    
+    if ($matched) {
+        unset($data[$field_name]);
+    }
+}
+
+
+function includeIf(string $field_name, array $field_data, array &$data)
+{
+    $key = array_key_first($field_data);
+    $matched = isset($data[$key]) && $data[$key] === $field_data[$key];
+    
+    if (!$matched) {
+        unset($data[$field_name]);
+    }
+}
+
+/**
+ * Check if a value is in provided array
+ *
+ * @param string $field_name
+ * @param array $values
+ * @param array $data
+ * @return void
+ */
 function in(string $field_name, array $values, array $data)
 {
     $value = $data[$field_name];
 
-    throwError(!in_array($value, $values), "$field_name is invalid");
+    throwError(!in_array($value, $values), "$field_name is not allowed");
 }
+
+/**
+ * Check if date is valid
+ *
+ * @param string $field_name
+ * @param array $rule_name
+ * @param array $data
+ * @return void
+ */
+function validDate(string $field_name, array $rule_name, array $data)
+{
+    list($day, $month, $year) = explode("/", $data[$field_name]);
+    $valid = checkdate($month, $day, $year);
+    throwError(!$valid, "$field_name should be like DD/MM/YYYY");
+}
+
 
 
 function requiredWithout(string $field_name, string|array $fields, array &$data)
@@ -241,6 +331,19 @@ function requiredWithout(string $field_name, string|array $fields, array &$data)
     throwError($none_is_set, "At least $field_name should be provided");
 }
 
+/**
+ * Checks if a hash matches
+ *
+ * @param string $field_name field name
+ * @param string $hash       hashed string
+ * @param array $data        data
+ * @return boolean
+ */
+function hashMatch(string $field_name, string $hash, array $data)
+{
+    $hash_dont_match = !(password_verify($data[$field_name], $hash));
+    throwError($hash_dont_match, "$field_name was incorrect");
+}
 
 /**
  * Throws field error whenever error occurs

@@ -12,8 +12,12 @@
  * @link     link
  */
 
-require "validation_funcs.php";
-require "../token.php";
+require_once "validation_funcs.php";
+require_once "../token.php";
+
+if (!class_exists("Session")) {
+    include  __DIR__ . "/../classes/Session.php";
+}
 
 /**
  * Validator class
@@ -33,6 +37,7 @@ class Validator
     public bool $valid = false;
     public string $main_error = "";
     public string $success_msg = "";
+    public bool $validated = false;
 
     /**
      * Constructor
@@ -44,6 +49,8 @@ class Validator
     {
         $this->rules = $rules;
         $this->data = array_merge($data, $_FILES);
+
+        $this->restore();
     }
 
     /**
@@ -56,6 +63,20 @@ class Validator
     public function setSuccessMsg(string $success_msg): Validator
     {
         $this->success_msg = $success_msg;
+
+        return $this;
+    }
+
+    /**
+     * Save success_msg
+     *
+     * @param string $success_msg success message
+     * 
+     * @return Validator
+     */
+    public function saveSuccessMsg(): Validator
+    {
+        Session::set("forms.success.msg", $this->success_msg);
         return $this;
     }
 
@@ -66,7 +87,7 @@ class Validator
      */
     public function getSuccessMsg(): string
     {
-        return $this->success_msg;
+        return $this->success_msg ?: Session::see("forms.sucess.msg", "");
     }
 
     /**
@@ -82,6 +103,38 @@ class Validator
         return $this;
     }
 
+
+    /**
+     * Redirect user
+     *
+     * @param string $location
+     * @return void
+     */
+    public function redirect(string $location):void
+    {
+        $this->saveData();
+        $this->saveErrors();
+        $this->saveMainError();
+        $this->saveSuccessMsg();
+
+        header("Location: $location");
+
+        exit();
+    }
+
+    /**
+     * Save main error
+     *
+     * @param string $error error message
+     * 
+     * @return Validator
+     */
+    public function saveMainError(): Validator
+    {
+        Session::set("forms.msg.error", $this->main_error);
+        return $this;
+    }
+
     /**
      * Get main error
      *
@@ -89,7 +142,7 @@ class Validator
      */
     public function getMainError(): string
     {
-        return $this->main_error;
+        return $this->main_error ?: Session::see("forms.msg.error", "");
     }
 
     /**
@@ -131,9 +184,22 @@ class Validator
         array_walk(
             $this->rules,
             function ($rules, $field) {
+                // $all_rules = array_merge(array_keys($rules), array_values($rules));
                 try {
+                    // if (!isset($this->data[$field])) {
+                    //     throw new FieldDoesNotExist("$field is requied");
+                    // }
+
+                    // if (empty($this->data($field))) {
+                    //     throw new FieldEmpty("$field can't be empty");
+                    // }
+
                     $this->validateField($field);
                 } catch (FieldDoesNotExist | FieldEmpty $e) {
+                    // if (in_array("nullable", $all_rules)) {
+                    //     unset($this->data[$field]);
+                    //     return;
+                    // }
                     $this->addError($field, str_replace("_", " ", $e->getMessage()));
                 }
             }
@@ -141,7 +207,49 @@ class Validator
 
         $this->valid = !boolval(count($this->getErrors()));
 
+        $this->validated = true;
+
         return $this->valid;
+    }
+
+    /**
+     * When validation failed
+     *
+     * @param Closure $callback
+     * @return Validator
+     */
+    public function isInvalid(Closure $callback): Validator
+    {
+        if ($this->validated && !$this->valid) {
+            $callback($this);
+        }
+        return $this;
+    }
+
+    /**
+     * Restore saved data and or errors from session if any
+     *
+     * @return Validator
+     */
+    public function restore(): Validator
+    {
+        $this->data = array_merge(Session::see("forms.data", []), $this->data());
+        $this->errors = array_merge(Session::see('errors', []), $this->getErrors());
+        return $this;
+    }
+
+    /**
+     * When validation was successful
+     *
+     * @param Closure $callback
+     * @return Validator
+     */
+    public function isValid(Closure $callback): Validator
+    {
+        if ($this->validated && $this->valid) {
+            $callback($this);
+        }
+        return $this;
     }
 
     /**
@@ -151,8 +259,7 @@ class Validator
      */
     public function clearErrors(): Validator
     {
-        $_SESSION['errors'] = [];
-        unset($_SESSION['errors']);
+        Session::remove("errors");
         return $this;
     }
 
@@ -163,7 +270,7 @@ class Validator
      */
     public function saveData(): Validator
     {
-        $_SESSION['form_data'] = $this->data;
+        Session::set('forms.data', $this->data);
         return $this;
     }
 
@@ -176,6 +283,10 @@ class Validator
      */
     public function data(string $field = "")
     {
+        if (Session::has("forms.data")) {
+            array_merge($this->data, Session::see("forms.data", []));
+        }
+
         if (empty($field)) {
             return $this->data;
         }
@@ -200,7 +311,7 @@ class Validator
             if ($csrf->check_valid('post')) {
                 $callback($this);
             } else {
-                exit("Page expired!");
+                exit("Invalid csrf token!");
             }
         }
     }
@@ -213,8 +324,7 @@ class Validator
      */
     public function saveErrors(): Validator
     {
-        $_SESSION['errors'] = $this->getErrors();
-
+        Session::set("forms.errors", $this->getErrors()); 
         return $this;
     }
 
@@ -227,8 +337,8 @@ class Validator
      */
     public function getErrors(string $field = ""): array
     {
-        if (isset($_SESSION['errors'])) {
-            $this->errors = $_SESSION['errors'];
+        if (Session::has("forms.errors")) {
+            $this->errors = array_merge($this->errors, Session::see("forms.errors", []));
         }
         return !func_num_args() ? ($this->errors) : (isset($this->errors[$field]) ? $this->errors[$field] : []);
     }
@@ -314,7 +424,8 @@ class Validator
                 try {
                     $rule_handler($field, $rule_constraint, $this->data);
                 } catch (FieldError $e) {
-                    $this->addError($field, $e->getMessage());
+                    $this->addError($field, str_replace("_", " ", $e->getMessage()));
+                    // $this->addError($field, $e->getMessage());
                 }
             }
         );
@@ -323,6 +434,8 @@ class Validator
         if (!count($this->getErrors($field))) {
             $value = $this->data($field) === "on" ? true : $this->data($field);
             $value = empty($this->data($field)) ? false : $this->data($field);
+            // if (!in_array("nullable", $this->rules[$field]) && empty($value)) {
+            // }
             $this->valid_data = array_merge($this->valid_data, [$field => $value]);
         }
 
@@ -373,10 +486,8 @@ class Validator
         <div class="formError">{$this->getMainError()}</div>
         ST : "";
         $success_msg = function () {
-            $msg = $this->getSuccessMsg() ? $this->getSuccessMsg() : (
-                isset($_SESSION["msg"]) ? $_SESSION["msg"] : ""
-            );
-            
+            $msg = $this->getSuccessMsg() ? $this->getSuccessMsg() : (Session::see("forms.success.msg", ""));
+
             if (empty($msg)) {
                 $msg = isset($_REQUEST["msg"]) ? $_REQUEST["msg"] : "";
             }
@@ -384,20 +495,19 @@ class Validator
             return !empty($msg) ? <<<ST
                 <div class="formMsg">$msg</div>
             ST : "";
-    
         };
 
         return [$errors, $data, $errorClass, $mainError, $success_msg, $this->getCsrfField()];
-        
     }
-    
-    function getCsrfField():Closure {
+
+    function getCsrfField(): Closure
+    {
         $csrf = new csrf();
-        
+
         // Generate Token Id and Valid
         $token_id = $csrf->get_token_id();
         $token_value = $csrf->get_token();
-        $crsf_field = function() use ($token_id, $token_value){
+        $crsf_field = function () use ($token_id, $token_value) {
             return <<<ST
             <input data-csrf type="hidden" name="$token_id" value="$token_value" />
             ST;
@@ -420,6 +530,7 @@ class FieldEmpty extends Exception
 {
     // Something here if necessary
 }
+
 
 /**
  * Error for non existing field 

@@ -172,7 +172,7 @@ class User
      * @param array $except excluded users
      * @return array
      */
-    public static function getAll(array $except = []):array
+    public static function getAll(array $except = []): array
     {
         $args = implode(",", str_split(str_repeat("?", count($except))));
 
@@ -190,7 +190,7 @@ class User
      * 
      * @return array
      */
-    public function getNonFriends():array
+    public function getNonFriends(): array
     {
         $query = "SELECT * FROM `users` WHERE `users`.`username` NOT IN 
         (
@@ -217,7 +217,7 @@ class User
      * @param string $search search
      * @return array
      */
-    public static function search(string $search):array
+    public static function search(string $search): array
     {
         $query = "SELECT * FROM `users` 
             WHERE (SELECT CONCAT(users.username,' ', users.fname, ' ', users.lname, ' ', users.address, ' ', users.email)) LIKE :me 
@@ -227,4 +227,80 @@ class User
         $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
         return $stmt->fetchAll();
     }
+    
+    /**
+     * Get user by password reset token
+     *
+     * @param string $token
+     * 
+     * @return User|boolean
+     */
+    public static function getByResetToken(string $token):User|bool
+    {
+        $query = "SELECT `users`.* 
+        FROM `pwdreset`
+        JOIN `users` ON `pwdreset`.`email` = `users`.`email`
+        WHERE `pwdreset`.`token` = :token AND `pwdreset`.`verified` = 0";
+
+        $stmt = DB::conn()->prepare($query);
+        $stmt->execute([":token" => $token]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, self::class);
+        return $stmt->fetch();
+    }
+
+    /**
+     * create a user password reset token
+     *
+     * @return string
+     */
+    function createResetToken():string 
+    {
+        $token = bin2hex(random_bytes(32));
+        $query = "INSERT INTO `pwdreset` (`email`, `token`) 
+                VALUES  (?, ?)
+        ";
+        $stmt = DB::conn()->prepare($query);
+        $stmt->execute([$this->email, $token]);
+        return $token;
+    }
+
+    public function markTokenAsVerified(string $token)
+    {
+        $query = "UPDATE `pwdreset` SET `verified`=1 WHERE `email` = ? AND token= ?";
+        $stmt = DB::conn()->prepare($query);
+        $stmt->execute([$this->email, $token]);
+        return boolval($stmt->rowCount());
+    }
+
+
+    /**
+     * Change user password
+     *
+     * @param string $new_pass
+     * @return void
+     */
+    public function changePassword( string $new_pass)
+    {
+        $hash = password_hash($new_pass, PASSWORD_DEFAULT);
+        return $this->setProperty("password", $hash);
+    }
+
+    /**
+     * Update user properties
+     *
+     * @param array $properties
+     * @return User
+     */
+    public function updateProperties(array $properties):User
+    {
+        $cols = implode("= ?, ", array_keys($properties)) . " = ?";
+        $values = array_values($properties);
+
+        $query = "UPDATE `users` SET $cols WHERE `username` = ?";
+        $stmt = DB::conn()->prepare($query);
+        $stmt->execute([...$values, $this->username]);
+        
+        return self::findOne($this->username);
+    }
+
 }

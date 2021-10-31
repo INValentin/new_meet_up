@@ -7,8 +7,27 @@ if (!isset($_GET['post_id'])) {
     return sendJson($closure);
 }
 
-$page = isset($_GET['page']) ? intval($_GET['page']) : 0;
-$length = isset($_GET['page_length']) ? intval($_GET['page_length']) : 5;
 $post_id = intval($_GET['post_id']);
 
-return sendJson(fn() => Comment::findByPost($post_id, $page, $length));
+$comments = Comment::findByPost($post_id);
+$comment_paginator = new Paginator();
+$comment_paginator->updateHasMore(count($comments));
+
+
+$prev_url = $comment_paginator->hasPrev() ? (
+    current_url_full() . "&page=" . ($comment_paginator->getCurrentPage() - 1)
+) : null;
+
+$next_url = $comment_paginator->has_more ? (
+    current_url_full() . "&page=". ($comment_paginator->getCurrentPage() + 1)
+) : null;
+
+$data = [
+    "data" => $comments,
+    "next_url" => $next_url,
+    "prev_url" => $prev_url
+];
+
+return sendJson(fn() => $data);
+
+

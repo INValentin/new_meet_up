@@ -101,8 +101,8 @@ function fromActiveUser(Story $story)
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/stories.css">
+    <link rel="stylesheet" href="<?php echo $ROOT_URL; ?>/stories/css/main.css">
+    <link rel="stylesheet" href="<?php echo $ROOT_URL; ?>/stories/css/stories.css">
     <title>Stories</title>
 </head>
 
@@ -118,23 +118,23 @@ function fromActiveUser(Story $story)
                     <div class="storyList">
                         <div class="storyItem <?php echo fromActiveUser($my_story) ? "active" : ""; ?>">
                             <div class="storyImg">
-                                <img src="../images/<?php echo urlencode($me->profile_pic); ?>" alt="User Pic" />
+                                <img src="<?php echo getUrl("/images/" . urlencode($me->profile_pic)); ?>" alt="User Pic" />
                             </div>
                             <div class="storyDetails">
-                                <a href="#" class="storyName">
+                                <a href="<?php echo getUrl("/friends/profile.php?user={$my_story->username}"); ?>" class="storyName">
                                     <?php echo $my_story->username; ?>
                                 </a>
                                 <div class="storyData">
-                                    <?php echo $my_story->story_count ? "</span><span class='storyCount'>{$my_story->story_count} stories</span>" : ""; ?>
+                                    <?php echo $my_story->story_count ? "</span><span class='storyCount'>{$my_story->story_count} storie(s)</span>" : ""; ?>
                                     <span class="storyTime"><?php echo $date_obj->dateDiffStr($my_story->created_at); ?></span>
                                 </div>
                             </div>
-                            <a class="storyLink" href="./index.php?story=<?php echo $my_story->id; ?>" style="display:none;"></a>
+                            <a class="storyLink" href="<?php echo getUrl("/stories/index.php?story={$my_story->id}");?>" style="display:none;"></a>
                         </div>
                     </div>
                 <?php endif; ?>
                 <div class="storyCreate">
-                    <a href="./story_create.php" class="storyCreateBtn btn">Create</a class="btn" href="./story_create.html">
+                    <a href="<?php echo getUrl("/stories/story_create.php"); ?>" class="storyCreateBtn btn">Create</a class="btn">
                     <div class="createText">
                         <h5 class="createStoryHeader">Create your story</h5>
                         <small class="createStoryDec">Share your moments</small>
@@ -151,19 +151,19 @@ function fromActiveUser(Story $story)
                         ?>
                         <div class="storyItem <?php echo fromActiveUser($story) ? "active" : ""; ?>">
                             <div class="storyImg">
-                                <img src="../images/<?php echo urlencode($user->profile_pic); ?>" alt="User Pic" />
+                                <img src="<?php echo $ROOT_URL; ?>/images/<?php echo urlencode($user->profile_pic); ?>" alt="User Pic" />
                             </div>
                             <a href="#" class="storyName">
                                 <?php echo $story->username; ?>
                             </a>
                             <div class="storyDetails">
                                 <div class="storyData">
-                                    <?php echo $story->story_count ? "</span><span class='storyCount'>{$story->story_count} stories</span>" : ""; ?>
+                                    <?php echo $story->story_count ? "</span><span class='storyCount'>{$story->story_count} storie(s)</span>" : ""; ?>
                                     <!-- <span class="dot"></span> -->
                                     <span class="storyTime"><?php echo $date_obj->dateDiffStr($story->created_at); ?></span>
                                 </div>
                             </div>
-                            <a class="storyLink" href="./index.php?story=<?php echo $story->id; ?>" style="display:none;"></a>
+                            <a class="storyLink" href="<?php echo getUrl("index.php?story=$story->id"); ?>" style="display:none;"></a>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -176,10 +176,10 @@ function fromActiveUser(Story $story)
 
                     <div data-main-story="<?php echo $main_story_data; ?>" class="storyPreview">
                         <?php if ($main_story->image) : ?>
-                            <img src="./story_uploads/<?php echo $main_story->image; ?>" alt="story Image" class="storyPreviewImg">
+                            <img src="<?php echo getUrl("story_uploads/$main_story->image"); ?>" alt="story Image" class="storyPreviewImg">
                         <?php endif; ?>
                         <?php if ($main_story->has_media) : ?>
-                            <video src="./story_uploads/<?php echo $main_story->media; ?>" autoplay="true" class="storyPreviewVideo"></video>
+                            <video src="<?php echo $ROOT_URL; ?>/stories/story_uploads/<?php echo $main_story->media; ?>" autoplay="true" class="storyPreviewVideo"></video>
                         <?php endif; ?>
                         <?php if ($main_story->description) : ?>
                             <div class="<?php echo (!$main_story->image && !$main_story->has_media) ? 'centered' : ""; ?> storyDesc"><?php echo $main_story->description; ?></div>
@@ -192,8 +192,8 @@ function fromActiveUser(Story $story)
                                     $viewed = $user_story?->viewedBy($me->username) ? "viewed" : "";
                                     $done = $user_story->id < $main_story->id ? "done" : "";
                                     ?>
-                                    <!-- <a href="./index.php?story={$user_story->id}"> -->
-                                    <a href="./index.php?story=<?php echo $user_story->id; ?>" style="width: <?php echo (100 / count($user_stories)); ?>%" class="<?php echo " $active $done $viewed"; ?> storyPreviewProgressContainer">
+                                    <!-- <a href="<?php echo $ROOT_URL; ?>/stories/index.php?story={$user_story->id}"> -->
+                                    <a href="<?php echo $ROOT_URL; ?>/stories/index.php?story=<?php echo $user_story->id; ?>" style="width: <?php echo (100 / count($user_stories)); ?>%" class="<?php echo " $active $done $viewed"; ?> storyPreviewProgressContainer">
                                         <div class="storyPreviewProgress"></div>
                                     </a>
                                 <?php endforeach; ?>
@@ -201,7 +201,7 @@ function fromActiveUser(Story $story)
 
                             <div class="storyPreviewUser">
                                 <div class="storyPreviewUserImg">
-                                    <img src="../images/<?php echo $user->profile_pic; ?>" alt="user image">
+                                    <img src="<?php echo $ROOT_URL; ?>/images/<?php echo $user->profile_pic; ?>" alt="user image">
                                 </div>
                                 <div class="storyPreviewUserInfo">
                                     <a href="#" class="storyPreviewUserName"><?php echo $main_story->username; ?></a>
@@ -209,30 +209,30 @@ function fromActiveUser(Story $story)
                                     <span class="storyPreviewViews"><?php echo $main_story->views; ?> view(s)</span>
                                 </div>
                             </div>
-                            <?php if ($main_story->has_media) : ?>
-                                <div class="storyPreviewMediaControls">
-                                    <span data-play-icon class="storyPreviewMediaControlIcon">
-                                        <img src="<?php echo getUrl("/assets/images/play.png") ?>" alt="play icon">
-                                    </span>
-                                    <span data-pause-icon class="hide storyPreviewMediaControlIcon">
-                                        <img src="<?php echo getUrl("/assets/images/pause.png") ?>" alt="pause icon">
-                                    </span>
+                            <div class="storyPreviewMediaControls">
+                                <span data-play-icon class="storyPreviewMediaControlIcon">
+                                    <img src="<?php echo getUrl("/assets/images/play.png") ?>" alt="play icon">
+                                </span>
+                                <span data-pause-icon class="hide storyPreviewMediaControlIcon">
+                                    <img src="<?php echo getUrl("/assets/images/pause.png") ?>" alt="pause icon">
+                                </span>
+                                <?php if ($main_story->has_media) : ?>
                                     <span data-volume-icon class="storyPreviewMediaControlIcon">
                                         <img src="<?php echo getUrl("/assets/images/volume_off.png") ?>" alt="volume icon">
                                     </span>
-                                </div>
-                            <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                     <?php if ($prev_story) : ?>
-                        <a href="./index.php?story=<?php echo $prev_story->id; ?>" class="storyPreviewPrevButton btn">Prev</a>
+                        <a href="<?php echo $ROOT_URL; ?>/stories/index.php?story=<?php echo $prev_story->id; ?>" class="storyPreviewPrevButton btn">Prev</a>
                     <?php endif; ?>
                     <?php if ($next_story) : ?>
-                        <a href="./index.php?story=<?php echo $next_story->id; ?>" class="storyPreviewNextButton btn">Next</a>
+                        <a href="<?php echo $ROOT_URL; ?>/stories/index.php?story=<?php echo $next_story->id; ?>" class="storyPreviewNextButton btn">Next</a>
                     <?php else : ?>
-                        <a href="<?php echo getUrl("/index.php"); ?>" data-redirect-home class="hide btn"></a>
+                        <a href="<?php echo getUrl("/stories/index.php"); ?>" data-redirect-home class="hide btn"></a>
                     <?php endif; ?>
-                    <form class="storyPreviewReply" action="./story_reply.php" method="post">
+                    <form class="storyPreviewReply" action="<?php echo $ROOT_URL; ?>/stories/story_reply.php" method="post">
                         <?php if ($main_story?->username !== $me->username) :  ?>
                             <input type="hidden" name="sender" value="<?php echo $me->username; ?>">
                             <input type="hidden" name="story_id" value="<?php echo $main_story->id; ?>">
@@ -250,7 +250,7 @@ function fromActiveUser(Story $story)
         </div>
     </div>
 
-    <script src="./js/story.js" defer></script>
+    <script src="<?php echo $ROOT_URL; ?>/stories/js/story.js" defer></script>
 </body>
 
 </html>

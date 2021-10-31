@@ -21,6 +21,8 @@ const replyInput = storyPreviewContainer.querySelector(
     "form > input[name='reply']"
 );
 const video = storyPreview.querySelector("video");
+const playIcon = storyPreview.querySelector("[data-play-icon");
+const pauseIcon = storyPreview.querySelector("[data-pause-icon");
 
 let paused = false;
 let progressPercentage = 0;
@@ -28,6 +30,7 @@ let interval;
 init();
 
 function init() {
+
     storyPreviewProgress.style.width = "0";
 
     if (replyInput) {
@@ -40,7 +43,26 @@ function init() {
     }
 
     if (!video) {
-        interval = setInterval(animateProgessBar, 50);
+        storyPreview.addEventListener("click", e => {
+            paused = !paused;
+        })
+        interval = setInterval(() => {
+            if (!paused) {
+                animateProgessBar();
+            }
+        }, 50);
+
+        pauseIcon.addEventListener("click", (e) => {
+            paused = true;
+            playIcon.classList.remove("hide");
+            pauseIcon.classList.add("hide");
+        });
+
+        playIcon.addEventListener("click", e => {
+            paused = false;
+            pauseIcon.classList.remove("hide");
+            playIcon.classList.add("hide");
+        });
         return;
     }
 
@@ -64,8 +86,6 @@ function animateProgessBar() {
 }
 
 function handleVideo() {
-    const playIcon = storyPreview.querySelector("[data-play-icon");
-    const pauseIcon = storyPreview.querySelector("[data-pause-icon");
     const volumeIcon = storyPreview.querySelector("[data-volume-icon");
 
     const playVideo = (e) => video.play();

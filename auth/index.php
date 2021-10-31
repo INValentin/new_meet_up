@@ -4,6 +4,7 @@
 require_once __DIR__ . "/unauthenticate.php";
 require_once "Auth.php";
 require_once __DIR__ . "/../forms/Validator.php";
+require_once __DIR__ . "/../classes/Session.php";
 
 $validator = new Validator();
 list($errors, $data, $errorClass, $mainError, $msg, $csrf) = $validator->helpers();
@@ -24,7 +25,10 @@ $validator->methodPost(
             try {
                 $user = Auth::login(...$validator->valid_data);
                 if ($user) {
+
                     if (!$user->verified) {
+                        Auth::sendVerficationCode($user);
+                        Session::set("verify_email", $user->email);
                         header("Location: ./verify_email.php?msg=Please verify email first");
                         exit();
                     }
@@ -90,6 +94,7 @@ $validator->methodPost(
 
             </div>
             <p class="formText">Don't have account? <a href="./signup.php" class="formLink">signup</a></p>
+            <p class="formText"><a href="<?php echo getUrl("/auth/reset_password.php") ?>" class="formLink">Forgot password ?</a></p>
             <button>Login</button>
         </form>
     </div>

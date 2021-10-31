@@ -37,7 +37,7 @@
     margin: 0.25rem 0 0.5rem;
 }
 
-.mainForm label {
+.mainForm label, .mainForm .label {
     font-weight: 500;
     font-size: medium;
     text-shadow: 1px 1.2px 1px rgba(200, 200, 200, 0.2),
@@ -106,7 +106,7 @@ form .errors > * {
     font-size: small;
 }
 
-:is(.mainInput, .inputContainer).error input,
+:is(.mainInput, .mainInput__split, .inputContainer).error input,
 input.error,
 textarea.error,
 .emoji-wysiwyg-editor.error,
@@ -114,11 +114,11 @@ select.error {
     border: 1px solid var(--red);
 }
 
-:is(.mainInput, .inputContainer).error input::placeholder {
+:is(.mainInput, .mainInput__split, .inputContainer).error input::placeholder {
     color: var(--red);
 }
 
-:is(.mainInput, .inputContainer).error label {
+:is(.mainInput, .mainInput__split, .inputContainer).error label {
     color: var(--red);
 }
 
@@ -134,6 +134,10 @@ select.error {
     max-width: 90%;
     margin: 0.5rem auto;
     box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+input[type="radio"] {
+    cursor: pointer;
 }
 
 .formMsg {

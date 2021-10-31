@@ -4,7 +4,7 @@ class Friends
     protected $me;
     protected $db;
 
-    function __construct(PDO $conn, $me)
+    function __construct(PDO $conn, string $me)
     {
         $this->me = $me;
         $this->db = $conn;

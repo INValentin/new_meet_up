@@ -15,35 +15,8 @@ class Session
         Session::set(Session::$seen_key, []);
     }
 
-    /**
-     * Set session key as seen
-     *
-     * @param string $key key 
-     * 
-     * @return void
-     */
-    public static function setAsSeen(string $key):void
-    {
-        if (!Session::has(Session::$seen_key)) {
-            Session::se();
-        }
-
-        array_push($_SESSION[Session::$seen_key], [$key]);
-    }
-
     public static function clearSeen()
     {
-        if (!Session::has(Session::$seen_key)) {
-            Session::init();
-        }
-
-        $seen = Session::get(Session::$seen_key, []);
-
-        foreach ($seen as $value) {
-            if (Session::has($value)) {
-                Session::remove($value);
-            }
-        }
     }
 
     /**
@@ -68,8 +41,9 @@ class Session
      */
     public static function see(string $key, mixed $default = null):mixed
     {
-        Session::setAsSeen($key);
-        return Session::get($key, $default);
+        $value = Session::get($key, $default);
+        Session::remove($key);
+        return $value;
     }
 
     /**
@@ -107,7 +81,9 @@ class Session
      */
     public static function remove(string $key):void
     {
-        unset($_SESSION[$key]);
+        if (Session::has($key)) {
+            unset($_SESSION[$key]);
+        }
     }
 
     public static function clear():void

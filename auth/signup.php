@@ -66,7 +66,7 @@ $validator->methodPost(
             <?php echo $mainError(); ?>
             <div class="formBody">
                 <?php echo $csrf(); ?>
-                <div class="mainInput split <?php echo $errorClass('username'); ?>">
+                <div class="mainInput split">
                     <div class="mainInput__split">
                         <Label for="signup_firstname">Firstname</Label>
                         <input value="<?php echo $data("fname"); ?>" name="fname" placeholder="Type firstname.." type="text" id="signup_firstname" />
@@ -88,15 +88,18 @@ $validator->methodPost(
                     <input value="<?php echo $data("username"); ?>" name="username" placeholder="Type username.." type="text" id="signup_username" />
                     <?php echo $errors('username'); ?>
                 </div>
-                <div class="mainInput <?php echo $errorClass('password'); ?>">
-                    <label for="signup_password">Password</label>
-                    <input name="password" placeholder="Type password.." type="password" id="signup_password" />
-                    <?php echo str_replace('_', ' ', $errors('password')); ?>
-                </div>
-                <div class="mainInput <?php echo $errorClass('confirm_password'); ?>">
-                    <label for="signup_confirm_password">Confirm Password</label>
-                    <input name="confirm_password" placeholder="Re-type password.." type="password" id="signup_confirm_password" />
-                    <?php echo str_replace('_', ' ', $errors('confirm_password')); ?>
+                <div class="mainInput split">
+
+                    <div class="mainInput__split <?php echo $errorClass('password'); ?>">
+                        <label for="signup_password">Password</label>
+                        <input name="password" placeholder="Type password.." type="password" id="signup_password" />
+                        <?php echo str_replace('_', ' ', $errors('password')); ?>
+                    </div>
+                    <div class="mainInput__split <?php echo $errorClass('confirm_password'); ?>">
+                        <label for="signup_confirm_password">Confirm Password</label>
+                        <input name="confirm_password" placeholder="Re-type password.." type="password" id="signup_confirm_password" />
+                        <?php echo str_replace('_', ' ', $errors('confirm_password')); ?>
+                    </div>
                 </div>
             </div>
             <p class="formText">Already have an account? <a href="./index.php" class="formLink">login</a></p>
