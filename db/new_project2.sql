@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2021 at 01:28 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Generation Time: Oct 31, 2021 at 10:53 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -77,7 +77,68 @@ INSERT INTO `comments` (`id`, `comment`, `post_id`, `username`, `created_at`) VA
 (35, '💋', 147, 'enzo', '2021-10-29 09:22:09'),
 (36, '😍❤️', 147, 'enzo', '2021-10-29 10:46:02'),
 (37, '😍❤️🙈', 147, 'enzo', '2021-10-29 10:46:16'),
-(38, 'jjjj', 147, 'vava', '2021-10-29 10:47:57');
+(38, 'jjjj', 147, 'vava', '2021-10-29 10:47:57'),
+(39, 'hey brother❤️❤️❤️', 147, 'valentin', '2021-10-29 12:52:56'),
+(40, 'jhdshjjhsd', 147, 'valentin', '2021-10-29 14:09:37'),
+(41, '❤️❤️', 147, 'valentin', '2021-10-29 16:26:06'),
+(42, '😃😃😃😃😃😃', 147, 'valentin', '2021-10-29 17:17:51'),
+(43, '😃❤️❤️❤️😱😱😱😱', 137, 'valentin', '2021-10-29 19:59:40'),
+(44, 'cool 🌋🌋🌋💪💪💪🙏🙏🙏🙏', 137, 'valentin', '2021-10-29 20:00:54'),
+(45, '💞💞💞💘💘💘💗💗💗💔💔', 137, 'valentin', '2021-10-29 20:01:23'),
+(46, 'Yeah!', 157, 'valentin', '2021-10-29 20:18:20'),
+(47, 'Hey!', 158, 'coder', '2021-10-30 18:37:47'),
+(48, 'What is up', 158, 'coder', '2021-10-30 18:38:27'),
+(49, '😳😚😝😝😝😢😢', 163, 'valentin', '2021-10-31 16:43:01'),
+(50, 'Where are u now?', 139, 'valentin', '2021-10-31 17:01:26'),
+(51, 'Great', 162, 'valentin', '2021-10-31 17:07:32'),
+(52, 'He', 163, 'valentin', '2021-10-31 20:22:56'),
+(53, 'ok', 163, 'valentin', '2021-10-31 20:50:23'),
+(54, 'jadja', 163, 'valentin', '2021-10-31 20:53:14'),
+(55, 'Ueee', 163, 'valentin', '2021-10-31 20:53:27'),
+(56, 'Oka\r\n\r\n', 163, 'valentin', '2021-10-31 20:54:31'),
+(57, 'Hello', 163, 'valentin', '2021-10-31 20:55:26'),
+(58, 'Hey', 163, 'valentin', '2021-10-31 20:55:40'),
+(59, 'Oka', 163, 'valentin', '2021-10-31 20:55:44'),
+(60, 'kahjas', 163, 'valentin', '2021-10-31 20:55:46'),
+(61, 'basbjsbnas', 163, 'valentin', '2021-10-31 20:55:48'),
+(62, 'sbasbas', 163, 'valentin', '2021-10-31 20:55:49'),
+(63, 'basbjas', 163, 'valentin', '2021-10-31 20:55:50'),
+(64, 'nnjasa', 163, 'valentin', '2021-10-31 20:55:51'),
+(65, 'masbas', 163, 'valentin', '2021-10-31 20:55:52'),
+(66, 'asmnsa', 163, 'valentin', '2021-10-31 20:55:53'),
+(67, 'nsanmsa', 163, 'valentin', '2021-10-31 20:55:54'),
+(68, 'nasas', 163, 'valentin', '2021-10-31 20:55:54'),
+(69, 'nasms', 163, 'valentin', '2021-10-31 20:55:55'),
+(70, 'nsnmas', 163, 'valentin', '2021-10-31 20:55:56'),
+(71, 'sa,nas', 163, 'valentin', '2021-10-31 20:55:57'),
+(72, 'mas,sa', 163, 'valentin', '2021-10-31 20:55:58'),
+(73, 'msa,msa', 163, 'valentin', '2021-10-31 20:55:59'),
+(74, ',sa,,as', 163, 'valentin', '2021-10-31 20:56:00'),
+(75, 'l;lll', 163, 'valentin', '2021-10-31 21:23:53'),
+(76, ',l', 163, 'valentin', '2021-10-31 21:23:55'),
+(77, ',', 163, 'valentin', '2021-10-31 21:23:55'),
+(78, 'l', 163, 'valentin', '2021-10-31 21:23:56'),
+(79, ';', 163, 'valentin', '2021-10-31 21:23:57'),
+(80, 'klldsds', 163, 'valentin', '2021-10-31 21:24:00'),
+(81, 'sdsd', 163, 'valentin', '2021-10-31 21:24:01'),
+(82, 's', 163, 'valentin', '2021-10-31 21:24:01'),
+(83, 'ds', 163, 'valentin', '2021-10-31 21:24:02'),
+(84, 'ss', 163, 'valentin', '2021-10-31 21:24:02'),
+(85, 'd', 163, 'valentin', '2021-10-31 21:24:03'),
+(86, 'fs', 163, 'valentin', '2021-10-31 21:24:03'),
+(87, 'f', 163, 'valentin', '2021-10-31 21:24:03'),
+(88, 's', 163, 'valentin', '2021-10-31 21:24:03'),
+(89, 'das', 163, 'valentin', '2021-10-31 21:24:04'),
+(90, 'asd', 163, 'valentin', '2021-10-31 21:24:04'),
+(91, 'd', 163, 'valentin', '2021-10-31 21:24:04'),
+(92, 'a', 163, 'valentin', '2021-10-31 21:24:05'),
+(93, 'a', 163, 'valentin', '2021-10-31 21:24:05'),
+(94, 'd', 163, 'valentin', '2021-10-31 21:24:05'),
+(95, 'sd', 163, 'valentin', '2021-10-31 21:24:05'),
+(96, 'as', 163, 'valentin', '2021-10-31 21:24:06'),
+(97, 'a', 163, 'valentin', '2021-10-31 21:24:06'),
+(98, 'd', 163, 'valentin', '2021-10-31 21:24:06'),
+(99, '😚😝😝😝', 163, 'valentin', '2021-10-31 21:46:22');
 
 -- --------------------------------------------------------
 
@@ -87,7 +148,7 @@ INSERT INTO `comments` (`id`, `comment`, `post_id`, `username`, `created_at`) VA
 
 CREATE TABLE `comment_likes` (
   `comment_id` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL
+  `username` varchar(100) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -101,9 +162,18 @@ INSERT INTO `comment_likes` (`comment_id`, `username`) VALUES
 (6, 'valentin'),
 (7, 'valentin'),
 (10, 'valentin'),
-(11, 'valentin'),
 (13, 'vava'),
-(19, 'vava');
+(19, 'vava'),
+(37, 'valentin'),
+(41, 'valentin'),
+(47, 'coder'),
+(50, 'valentin'),
+(51, 'valentin'),
+(52, 'valentin'),
+(81, 'valentin'),
+(82, 'valentin'),
+(84, 'valentin'),
+(99, 'valentin');
 
 -- --------------------------------------------------------
 
@@ -112,8 +182,8 @@ INSERT INTO `comment_likes` (`comment_id`, `username`) VALUES
 --
 
 CREATE TABLE `friendrequest` (
-  `sender` varchar(100) NOT NULL,
-  `reciever` varchar(100) NOT NULL,
+  `sender` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `reciever` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
@@ -122,12 +192,10 @@ CREATE TABLE `friendrequest` (
 --
 
 INSERT INTO `friendrequest` (`sender`, `reciever`, `date`) VALUES
-('enzo', 'coder', '2021-10-28 20:14:40'),
-('polite', 'coder', '2021-10-27 06:32:13'),
 ('polite', 'Makuza', '2021-10-27 06:32:18'),
 ('valentin', 'Lissouba', '2021-10-25 20:35:26'),
 ('valentin', 'Makuza', '2021-10-25 21:54:29'),
-('vava', 'coder', '2021-10-26 19:39:13'),
+('valentin', 'polite', '2021-10-30 14:00:33'),
 ('vava', 'yeahp', '2021-10-26 19:39:16');
 
 -- --------------------------------------------------------
@@ -137,8 +205,8 @@ INSERT INTO `friendrequest` (`sender`, `reciever`, `date`) VALUES
 --
 
 CREATE TABLE `friends` (
-  `friend` varchar(100) NOT NULL,
-  `partener` varchar(100) NOT NULL
+  `friend` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `partener` varchar(100) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -146,14 +214,16 @@ CREATE TABLE `friends` (
 --
 
 INSERT INTO `friends` (`friend`, `partener`) VALUES
-('enzo', 'vava'),
 ('Lissouba', 'vava'),
 ('Makuza', 'enzo'),
 ('Makuza', 'vava'),
+('enzo', 'coder'),
+('enzo', 'vava'),
+('polite', 'coder'),
 ('polite', 'enzo'),
 ('polite', 'vava'),
 ('valentin', 'enzo'),
-('valentin', 'vava');
+('vava', 'coder');
 
 -- --------------------------------------------------------
 
@@ -186,15 +256,21 @@ INSERT INTO `messages` (`id`, `sender`, `reciever`, `body`, `date_`, `status`, `
 (1282, 'Lissouba', 'vava', 'hello valentin', '2021-10-18 11:52:53', 'read', NULL),
 (1292, 'vava', 'Lissouba', 'yes bro', '2021-10-18 11:53:21', 'read', NULL),
 (1333, 'valentin', 'coder', 'cool \n(: (:', '2021-10-25 22:20:50', 'unread', NULL),
+(1376, 'valentin', 'coder', 'hjsdhjjhsd', '2021-10-29 16:09:16', 'unread', NULL),
 (1406, 'enzo', 'vava', 'hellooo', '2021-10-29 10:07:32', 'unread', NULL),
 (1767, 'vava', 'polite', 'welcome', '2021-10-27 06:37:55', 'read', NULL),
+(1791, 'valentin', 'coder', '😁😁😁', '2021-10-29 16:09:29', 'unread', NULL),
 (1824, 'vava', 'Lissouba', 'Go get them!', '2021-10-24 15:02:00', 'unread', NULL),
+(2056, 'valentin', 'coder', 'hhj', '2021-10-29 16:05:58', 'unread', NULL),
 (2095, 'vava', 'Lissouba', 'YEah!', '2021-10-24 15:01:55', 'unread', NULL),
 (2175, 'enzo', 'vava', 'hellooo❤️', '2021-10-29 10:07:59', 'unread', NULL),
+(2202, 'valentin', 'vava', '🙈🙈🙈', '2021-10-29 17:09:06', 'unread', NULL),
 (2224, 'enzo', 'vava', 'hello vava', '2021-10-17 19:07:44', 'read', NULL),
 (2649, 'valentin', 'coder', 'That works!', '2021-10-25 22:20:19', 'unread', NULL),
 (2678, 'vava', 'valentin', 'Wowow', '2021-10-25 22:11:27', 'read', NULL),
 (2964, 'valentin', 'coder', 'Hello, brother!', '2021-10-24 09:30:40', 'unread', NULL),
+(3155, 'enzo', 'valentin', 'Hhahahha 💋💋💋💋💋💋\nWe are back again!!', '2021-10-31 14:58:12', 'read', NULL),
+(3232, 'valentin', 'vava', '❤️😒😒😒😒😁😁😁😁😜😜😜', '2021-10-29 17:08:24', 'unread', NULL),
 (3295, 'valentin', 'coder', 'Wowow', '2021-10-24 09:30:43', 'unread', NULL);
 
 -- --------------------------------------------------------
@@ -233,7 +309,18 @@ INSERT INTO `posts` (`id`, `post`, `image`, `video`, `username`, `date`) VALUES
 (150, '🙈❤️', '', '', 'enzo', '2021-10-29 10:46:26'),
 (151, '❤️❤️', '', '', 'enzo', '2021-10-29 10:46:38'),
 (152, 'kkkkk', '', '', 'vava', '2021-10-29 10:48:03'),
-(153, 'jjkhjkjhhkhjk', '', '', 'vava', '2021-10-29 10:48:25');
+(153, 'jjkhjkjhhkhjk', '', '', 'vava', '2021-10-29 10:48:25'),
+(154, '😍😍😍😍😍😍', '', '', 'valentin', '2021-10-29 16:53:15'),
+(155, '🔱🔱🔱🔱', '', '', 'valentin', '2021-10-29 17:10:15'),
+(156, '😕😕😕😀😀😀😳😳', '', '', 'valentin', '2021-10-29 19:46:04'),
+(157, '', '3076781.jpg', '', 'valentin', '2021-10-29 20:11:36'),
+(158, '🌊🌊🌀🌀⭐️⭐️🌠🌠🌠🌌🌋🌋🌍🌍☀️☀️🎄🎄🎉🎉🎊🎊🎌🎌🎓🎓🎓🎒🎒🎒💝💝💝🎆🎆🎇🎇🎇🎁🎁🎥🎥🎥📣📣📣💰💰💰💰📭📭📭📪📪📪📌📌📌✂️✂️✂️📂📂📂📓📓🎨🎨🎨🎸🎸🎸🃏🃏🃏🏀🏀🏀🏀⚽️⚽️⚽️🏄🏄🏄🏊🏊🏊🏂', '', '', 'coder', '2021-10-30 18:13:24'),
+(159, '🌊🌊🌀🌀⭐️⭐️🌠🌠🌠🌌🌋🌋🌍🌍☀️☀️🎄🎄🎉🎉🎊🎊🎌🎌🎓🎓🎓🎒🎒🎒💝💝💝🎆🎆🎇🎇🎇🎁🎁🎥🎥🎥📣📣📣💰💰💰💰📭📭📭📪📪📪📌📌📌✂️✂️✂️📂📂📂📓📓🎨🎨🎨🎸🎸🎸🃏🃏🃏🏀🏀🏀🏀⚽️⚽️⚽️🏄🏄🏄🏊🏊🏊🏂', '', '', 'coder', '2021-10-30 18:13:33'),
+(160, 'Hello, brother!', '', '', 'coder', '2021-10-30 18:35:59'),
+(161, 'Emoji Post\r\n\r\n\r\n❤️❤️❤️', '6441351.jpg', '', 'valentin', '2021-10-30 22:51:02'),
+(162, 'Reverse it😂😂😂😂', '6792686.jpg', '', 'valentin', '2021-10-30 22:52:09'),
+(163, '😀😀😀😀🇫🇷🇫🇷🇯🇵🇯🇵🚩', '', '', 'valentin', '2021-10-31 14:35:25'),
+(164, '', '8768192.png', '', 'valentin', '2021-10-31 21:52:39');
 
 -- --------------------------------------------------------
 
@@ -242,7 +329,7 @@ INSERT INTO `posts` (`id`, `post`, `image`, `video`, `username`, `date`) VALUES
 --
 
 CREATE TABLE `post_likes` (
-  `username` varchar(100) NOT NULL,
+  `username` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `post_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
@@ -251,6 +338,7 @@ CREATE TABLE `post_likes` (
 --
 
 INSERT INTO `post_likes` (`username`, `post_id`) VALUES
+('coder', 159),
 ('polite', 137),
 ('polite', 138),
 ('polite', 139),
@@ -259,6 +347,14 @@ INSERT INTO `post_likes` (`username`, `post_id`) VALUES
 ('polite', 144),
 ('valentin', 139),
 ('valentin', 140),
+('valentin', 147),
+('valentin', 150),
+('valentin', 151),
+('valentin', 154),
+('valentin', 155),
+('valentin', 157),
+('valentin', 162),
+('valentin', 163),
 ('vava', 137),
 ('vava', 138),
 ('vava', 139),
@@ -277,11 +373,22 @@ INSERT INTO `post_likes` (`username`, `post_id`) VALUES
 
 CREATE TABLE `pwdreset` (
   `id` int(200) NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `reset` varchar(200) NOT NULL,
-  `token` varchar(200) NOT NULL,
-  `expires` varchar(200) NOT NULL
+  `email` varchar(200) COLLATE utf8mb4_bin NOT NULL,
+  `token` varchar(200) COLLATE utf8mb4_bin NOT NULL,
+  `expires` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `verified` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Dumping data for table `pwdreset`
+--
+
+INSERT INTO `pwdreset` (`id`, `email`, `token`, `expires`, `created_at`, `verified`) VALUES
+(8, 'ishimwevalentin3@gmail.com', 'ced8465c5ac3bafe8fc1bb6417e308d92506d1b9fe287746589c5ab7a16640cd', NULL, '2021-10-30 20:50:50', 1),
+(9, 'ishimwevalentin3@gmail.com', 'f814c8d69e42dba35c6a64c67fafa8ce01948251a0f34405af19e371efa71716', NULL, '2021-10-30 20:52:51', 0),
+(10, 'ishimwevalentin3@gmail.com', '910fcf2aa226ed653a6e37784dd424622630b20b689cc9dae9c5ec282ced8e3f', NULL, '2021-10-30 20:55:40', 1),
+(11, 'ishimwevalentin3@gmail.com', 'f4ef8d45b01754b99828a43a5fd69d541273fa52273db2431d43e931b9c0883c', NULL, '2021-10-30 21:02:38', 1);
 
 -- --------------------------------------------------------
 
@@ -315,7 +422,14 @@ INSERT INTO `stories` (`id`, `username`, `image`, `description`, `expired`, `cre
 (59, 'vava', '404980', '', 0, '2021-10-27 07:39:06', 0, '', 1),
 (60, 'vava', '', 'hgggggggggg', 0, '2021-10-28 20:06:56', 0, '', 2),
 (61, 'vava', '', 'ffffffffffffffff', 0, '2021-10-28 20:07:24', 0, '', 1),
-(62, 'vava', '', '❤️❤️❤️', 0, '2021-10-29 10:48:39', 0, '', 1);
+(62, 'vava', '', '❤️❤️❤️', 0, '2021-10-29 10:48:39', 0, '', 1),
+(63, 'valentin', '', '💋💋💋💋💋💋💋', 0, '2021-10-29 16:14:13', 0, '', 1),
+(64, 'valentin', '', '😒😁😁😁\r\n\r\nThis is so cool', 0, '2021-10-29 16:36:51', 0, '', 1),
+(65, 'valentin', '', '💋💋💋💋', 0, '2021-10-29 17:53:27', 0, '', 1),
+(66, 'valentin', '', 'nbnbassab', 0, '2021-10-29 21:07:23', 0, '', 1),
+(67, 'coder', '', '❤️😊😊😊❤️❤️❤️❤️😊😊😊😊', 0, '2021-10-30 18:41:59', 0, '', 1),
+(68, 'coder', '', '', 0, '2021-10-30 18:46:55', 0, '', 1),
+(69, 'valentin', '', '😍😍😍😍', 0, '2021-10-31 14:36:23', 0, '', 1);
 
 -- --------------------------------------------------------
 
@@ -325,7 +439,7 @@ INSERT INTO `stories` (`id`, `username`, `image`, `description`, `expired`, `cre
 
 CREATE TABLE `story_views` (
   `story_id` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL
+  `username` varchar(100) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -347,7 +461,14 @@ INSERT INTO `story_views` (`story_id`, `username`) VALUES
 (60, 'enzo'),
 (60, 'vava'),
 (61, 'vava'),
-(62, 'vava');
+(62, 'vava'),
+(63, 'valentin'),
+(64, 'valentin'),
+(65, 'valentin'),
+(66, 'valentin'),
+(67, 'coder'),
+(68, 'coder'),
+(69, 'valentin');
 
 -- --------------------------------------------------------
 
@@ -356,20 +477,20 @@ INSERT INTO `story_views` (`story_id`, `username`) VALUES
 --
 
 CREATE TABLE `users` (
-  `fname` varchar(100) NOT NULL,
-  `lname` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `fname` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `lname` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `dob` date NOT NULL,
-  `sex` varchar(7) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `about` varchar(500) NOT NULL DEFAULT 'Unknown',
-  `profile_pic` varchar(500) NOT NULL DEFAULT 'default.png',
-  `address` varchar(100) DEFAULT 'Unknown',
-  `status` varchar(10) NOT NULL DEFAULT 'offline',
-  `code` varchar(200) NOT NULL,
+  `sex` varchar(7) COLLATE utf8mb4_bin NOT NULL,
+  `username` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `about` varchar(500) COLLATE utf8mb4_bin NOT NULL DEFAULT 'Unknown',
+  `profile_pic` varchar(500) COLLATE utf8mb4_bin NOT NULL DEFAULT 'default.png',
+  `address` varchar(100) COLLATE utf8mb4_bin DEFAULT 'Unknown',
+  `status` varchar(10) COLLATE utf8mb4_bin NOT NULL DEFAULT 'offline',
+  `code` varchar(200) COLLATE utf8mb4_bin NOT NULL,
   `verified` tinyint(4) NOT NULL DEFAULT 0,
-  `remember_me` varchar(200) NOT NULL
+  `remember_me` varchar(200) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -377,14 +498,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`fname`, `lname`, `email`, `dob`, `sex`, `username`, `password`, `about`, `profile_pic`, `address`, `status`, `code`, `verified`, `remember_me`) VALUES
-('Hero', 'Coder', 'ishimwedeveloper@gmail.com', '0000-00-00', '', 'coder', '$2y$10$t0TIqyRsKO.jtdSM9PyFnOeSW/IE7x/kYz8L2AUH70WlmOd7XgdrS', '', '', '', 'offline', '464455', 0, ''),
-('ngirinshuti', 'prudent', 'prudentenri001@gmail.com', '2021-10-20', 'Male', 'enzo', '$2y$10$dbea5X8k6dJ8aNFNq74IeeCfJA2i5aFfp4GQ.7JhkoSq3b4euzsHS', 'Unknown', '615.png', 'Unknown', 'online', '500388', 1, '$2y$10$UAcIvZVGG5HfEYpcAb6ScuKgvblulS8cqso8ng/O.24AzWfwYDG8e'),
 ('niyonsaba', 'pascal', 'niyopascalg@gmail.com', '1997-10-07', 'Male', 'Lissouba', 'e091dbf01fb1d6484fc5e69138b0ae89c1ce30b3', 'I am student', 'default.png', 'Rwanda', 'online', '433730', 0, ''),
 ('Nsanzimana', 'Emmanuel', 'nsanzimanaofficial@gmail.com', '2021-10-20', 'Male', 'Makuza', '4c8b3664cee92bd72dafa03a6513b984850a1b78', 'Unknown', 'default.png', 'Unknown', 'offline', '520666', 0, ''),
+('Hero', 'Coder', 'ishimwedeveloper@gmail.com', '0000-00-00', '', 'coder', '$2y$10$G8CWIXmER8VHlsJ0sppiP.naFPHOhYOKsqEls4.vFR3Czs/h/uCSy', '', '', '', 'offline', '920288', 1, '$2y$10$vrZH9uAVewCZegNmb7/6W.uj1wVdVXJkTl9v4Erl6bcMFb0HYCPF.'),
+('ngirinshuti', 'prudent', 'prudentenri001@gmail.com', '2021-10-20', 'Male', 'enzo', '$2y$10$dbea5X8k6dJ8aNFNq74IeeCfJA2i5aFfp4GQ.7JhkoSq3b4euzsHS', 'Unknown', '615.png', 'Unknown', 'online', '500388', 1, '$2y$10$QYnXWQZ8VajGDVsgreY8zOrOhiOh3MmKNcd3cS658av/o1SwpfcgW'),
 ('Nshimiyimana', 'Viateur', 'nvipolite@gmail.com', '0000-00-00', '', 'polite', '$2y$10$Eb.k/wn.aSMvxvtxLK3FEei7NvODhmtzi17FYnWl/zNVSqlIV2FM6', 'i am single', '371.png', 'Rwanda', 'offline', '422235', 1, ''),
-('ISHIMWE', 'Valentin', 'ishimwevalentin3@gmail.com', '0000-00-00', '', 'valentin', '$2y$10$hzYhxD7t3Q56GM5xR.0Y3.S.hWizI5cdd/H5rT5Y04w9Sb3v2fhHy', '', '476.jpg', 'Kenya', 'offline', '110085', 1, '$2y$10$rV2ib6ic5stYQRcPz/Y9TuXWwNUIfjB2IHNls62q5Cea1W3JuMgQO'),
+('ISHIMWE', 'Valentin', 'ishimwevalentin3@gmail.com', '2002-10-11', 'male', 'valentin', '$2y$10$D0OuEX/QrFruB4xAJEQtLemSBffjimHOskI1mkINEoc9efB1COqeq', 'I am a good guy bro', '3981493.JPG', 'Muganza Sector Office', 'online', '110085', 1, '$2y$10$UVOhHi6pxxRwizM0KyO7DOikLU/3fkA1Jt8W4L22PmR6UJ/mRSLC6'),
 ('ishimwe', 'valentin', 'prudentenz001@gmail.com', '2021-10-20', 'Male', 'vava', '$2y$10$0.ER4L9nsmnE8mLXRr52ROPNxIgjXV3TrTbyfpOfUq1ahpIu4KPEe', 'w', '359.png', 'Unknown', 'online', '530036', 1, '$2y$10$Ie/CGLppAt964N6AL2hupeyoLCTBt1sv4MlJSe5pa3bduY6L4wwu.'),
-('ISHIMWE', 'jsdjhsd', 'ishimwevalentin3@gmail.comw', '0000-00-00', '', 'yeahp', '$2y$10$1xjROiN4i/3aQhpa8QU6EO2qnMDv40fjPlinSipovCdoQCHU9kJTW', '', '', '', 'offline', '870581', 0, '');
+('ISHIMWE', '', 'ishimwevalentin3@gmail.comw', '0000-00-00', '', 'yeahp', '$2y$10$1xjROiN4i/3aQhpa8QU6EO2qnMDv40fjPlinSipovCdoQCHU9kJTW', '', '', '', 'offline', '870581', 0, '');
 
 --
 -- Indexes for dumped tables
@@ -447,7 +568,8 @@ ALTER TABLE `post_likes`
 -- Indexes for table `pwdreset`
 --
 ALTER TABLE `pwdreset`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_resets` (`email`);
 
 --
 -- Indexes for table `stories`
@@ -478,7 +600,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -490,19 +612,19 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT for table `pwdreset`
 --
 ALTER TABLE `pwdreset`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `stories`
 --
 ALTER TABLE `stories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- Constraints for dumped tables
@@ -556,6 +678,12 @@ ALTER TABLE `posts`
 ALTER TABLE `post_likes`
   ADD CONSTRAINT `post_likes` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_liked_posts` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pwdreset`
+--
+ALTER TABLE `pwdreset`
+  ADD CONSTRAINT `user_resets` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `stories`
